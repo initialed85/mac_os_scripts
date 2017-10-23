@@ -7,7 +7,7 @@ import traceback
 RunCommandOutput = collections.namedtuple('RunCommandOutput', ['stdout', 'stderr', 'error_level'])
 
 
-def get_logger(name, max_bytes=16384, backup_count=2):
+def get_logger(name, max_bytes=16384, backup_count=2, also_stdout=True):
     """
     this function gets (or creates) a logger for the requested name
 
@@ -35,6 +35,17 @@ def get_logger(name, max_bytes=16384, backup_count=2):
         )
 
         logger.addHandler(handler)
+
+        if also_stdout:
+            handler = logging.StreamHandler()
+
+            handler.setFormatter(
+                logging.Formatter(
+                    '%(asctime)s %(levelname)s %(message)s'
+                )
+            )
+
+            logger.addHandler(handler)
 
     if existed:
         logger.debug('got existing logger for {0}'.format(name))
