@@ -19,7 +19,7 @@ _TEST_GET_DS_DONT_WRITE_NETWORK_STORES = RunCommandOutput(
 )
 
 
-class IPv6DisableTest(unittest.TestCase):
+class MetadataFileCreationDisablerTest(unittest.TestCase):
     def setUp(self):
         self._subject = MetadataFileCreationDisabler()
         self._subject.run_command = MagicMock()
@@ -43,6 +43,8 @@ class IPv6DisableTest(unittest.TestCase):
     def test_run_pass(self):
         self._subject.set_ds_dont_write_network_stores = MagicMock()
         self._subject.set_ds_dont_write_network_stores.return_value = True
+        self._subject.get_ds_dont_write_network_stores = MagicMock()
+        self._subject.get_ds_dont_write_network_stores.return_value = True
 
         assert_that(
             self._subject.run(),

@@ -31,7 +31,19 @@ class MetadataFileCreationDisabler(CLITieIn):
         return command_output.stdout.strip().lower() == '1'
 
     def run(self):
-        return self.set_ds_dont_write_network_stores()
+        self.set_ds_dont_write_network_stores()
+
+        passed = self.get_ds_dont_write_network_stores()
+        if not passed:
+            self._logger.error('{0} failed'.format(
+                self.__class__.__name__,
+            ))
+            return False
+
+        self._logger.debug('{0} passed'.format(
+            self.__class__.__name__,
+        ))
+        return True
 
 
 if __name__ == '__main__':
