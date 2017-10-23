@@ -1,7 +1,6 @@
 import collections
 import logging
 import logging.handlers
-import shlex
 import subprocess
 import traceback
 
@@ -17,8 +16,11 @@ def get_logger(name, max_bytes=16384, backup_count=2):
     :param backup_count: number of rotations of a file before deletion (e.g. x.log, x.log.1, x.log.2)
     :return: logger object
     """
+
     logger = logging.getLogger(name)
+    existed = True
     if not logger.handlers:
+        existed = False
         logger.setLevel(logging.DEBUG)
         handler = logging.handlers.RotatingFileHandler(
             '/tmp/mac_os_scripts_{0}.log'.format(name),
@@ -33,6 +35,11 @@ def get_logger(name, max_bytes=16384, backup_count=2):
         )
 
         logger.addHandler(handler)
+
+    if existed:
+        logger.debug('got existing logger for {0}'.format(name))
+    else:
+        logger.debug('created new logger for {0}'.format(name))
 
     return logger
 
@@ -56,14 +63,20 @@ def run_command(command_line, quiet=True):
 
     stdout, stderr, error_level = None, None, -255
 
+    quiet_fail_run_command_output = RunCommandOutput(
+        stdout=None,
+        stderr=None,
+        error_level=-255,
+    )
+
     log(logger.debug, 'called')
 
     try:
         p = subprocess.Popen(
-            shlex.split(command_line),
+            command_line,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            shell=False,
+            shell=True,
         )
         log(logger.debug, 'invoked Popen() successfully')
     except Exception as e:
@@ -72,6 +85,7 @@ def run_command(command_line, quiet=True):
         ))
         if not quiet:
             raise e
+        return quiet_fail_run_command_output
 
     try:
         stdout, stderr = [x.strip() for x in p.communicate()]
@@ -84,6 +98,7 @@ def run_command(command_line, quiet=True):
         ))
         if not quiet:
             raise e
+        return quiet_fail_run_command_output
 
     try:
         p.terminate()
