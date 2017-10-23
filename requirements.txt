@@ -1,5 +1,0 @@
---extra-index-url=http://saetech:saet3ch@imdemo.ftpsolutions.com.au:9010/simple/
---trusted-host=imdemo.ftpsolutions.com.au
-
-ims-utils==1.0.26
-pika==0.10.0
