@@ -15,7 +15,9 @@ _TEST_ENABLE_SECURITY_LOGGING = RunCommandOutput(
 
 class SecurityLoggingEnablerTest(unittest.TestCase):
     def setUp(self):
-        self._subject = SecurityLoggingEnabler()
+        self._subject = SecurityLoggingEnabler(
+            sudo_password='SomePassword',
+        )
         self._subject.run_command = MagicMock()
 
     def test_enable_security_logging(self):

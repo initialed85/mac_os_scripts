@@ -35,14 +35,10 @@ class MetadataFileCreationDisabler(CLITieIn):
 
         passed = self.get_ds_dont_write_network_stores()
         if not passed:
-            self._logger.error('{0} failed'.format(
-                self.__class__.__name__,
-            ))
+            self._logger.error('failed')
             return False
 
-        self._logger.debug('{0} passed'.format(
-            self.__class__.__name__,
-        ))
+        self._logger.debug('passed')
         return True
 
 

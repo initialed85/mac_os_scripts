@@ -21,7 +21,9 @@ _TEST_GET_DS_DONT_WRITE_NETWORK_STORES = RunCommandOutput(
 
 class MetadataFileCreationDisablerTest(unittest.TestCase):
     def setUp(self):
-        self._subject = MetadataFileCreationDisabler()
+        self._subject = MetadataFileCreationDisabler(
+            sudo_password='SomePassword',
+        )
         self._subject.run_command = MagicMock()
 
     def test_set_ds_dont_write_network_stores(self):

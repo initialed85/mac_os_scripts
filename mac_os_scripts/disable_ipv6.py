@@ -83,6 +83,7 @@ class IPv6Disabler(CLITieIn):
             ))
             return False
 
+        self._logger.debug('passed')
         return True
 
 

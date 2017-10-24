@@ -52,7 +52,9 @@ _TEST_GET_INFO_AFTER = {
 
 class IPv6DisableTest(unittest.TestCase):
     def setUp(self):
-        self._subject = IPv6Disabler()
+        self._subject = IPv6Disabler(
+            sudo_password='SomePassword',
+        )
         self._subject.run_command = MagicMock()
 
     def test_list_all_network_services(self):

@@ -17,7 +17,14 @@ class SecurityLoggingEnabler(CLITieIn):
         return True
 
     def run(self):
-        return self.enable_security_logging()
+        passed = self.enable_security_logging()
+
+        if not passed:
+            self._logger.error('failed')
+            return False
+
+        self._logger.debug('passed')
+        return True
 
 
 if __name__ == '__main__':
