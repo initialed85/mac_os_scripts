@@ -11,7 +11,7 @@ class LoginScriptEnabler(CLITieIn):
         command = 'defaults write /var/root/Library/Preferences/com.apple.loginwindow EnableMCXLoginScripts TRUE'
         command_output = self.sudo_command(command)
 
-        if command_output.stdout is None:
+        if command_output.error_level != 0:
             self._logger.error(
                 '{0} failed stating {1}'.format(
                     command, command_output
@@ -32,7 +32,7 @@ class LoginScriptEnabler(CLITieIn):
         )
         command_output = self.sudo_command(command)
 
-        if command_output.stdout is None:
+        if command_output.error_level != 0:
             self._logger.error(
                 '{0} failed stating {1}'.format(
                     command, command_output

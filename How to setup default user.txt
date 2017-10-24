@@ -1,0 +1,25 @@
+Need to use root (sudo su -)
+
+- setup the account as desired. Dock icons, Finder prefs, etc.
+
+- move the original template to a backup folder
+	- mv /System/Library/User\ Template/English.lproj /System/Library/User\ Template/orig-English.lproj
+
+- 'ditto' the account (as root) to /System/Library/User\ Template/English.lproj
+	- ditto /Users/user /System/Library/User\ Template/English.lproj
+
+- delete the com.apple.sharedfilelist
+	- rm -r /System/Library/User\ Template/English.lproj/Library/Application\ Support/com.apple.sharedfilelist/
+
+- edit the /System/Library/User\ Template/English.lproj/Library/Preferences/com.apple.dock.plist and remove "_CFURLString" for Downloads. (Need Xcode)
+	- defaults delete /System/Library/User\ Template/English.lproj/Library/Preferences/com.apple.dock.plist _CFURLString
+
+- Delete all the Keychains
+	- `rm -rf /System/Library/User\ Template/English.lproj/Library/Keychains/*
+
+- Delete the .bash* files from /System/Library/User\ Template/English.lproj/ *
+	- rm -rf /System/Library/User\ Template/English.lproj/.bash_*
+
+- Change ownership of the /System/Library/User\ Template/English.lproj folder
+	- chown -R root:wheel /System/Library/User\ Template/English.lproj
+	- chmod -R 755 /System/Library/User\ Template/English.lproj

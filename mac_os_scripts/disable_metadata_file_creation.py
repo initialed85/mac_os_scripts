@@ -6,7 +6,7 @@ class MetadataFileCreationDisabler(CLITieIn):
         command = 'defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true'
         command_output = self.command(command)
 
-        if command_output.stdout is None:
+        if command_output.error_level != 0:
             self._logger.error(
                 '{0} failed stating {1}'.format(
                     command, command_output
@@ -20,7 +20,7 @@ class MetadataFileCreationDisabler(CLITieIn):
         command = 'defaults read com.apple.desktopservices DSDontWriteNetworkStores'
         command_output = self.command(command)
 
-        if command_output.stdout is None:
+        if command_output.error_level != 0:
             self._logger.error(
                 '{0} failed stating {1}'.format(
                     command, command_output
@@ -31,11 +31,12 @@ class MetadataFileCreationDisabler(CLITieIn):
         return command_output.stdout.strip().lower() == '1'
 
     def run(self):
-        self.set_ds_dont_write_network_stores()
+        if not self.set_ds_dont_write_network_stores():
+            self._logger.error('failed set_ds_dont_write_network_stores; cannot continue')
+            return False
 
-        passed = self.get_ds_dont_write_network_stores()
-        if not passed:
-            self._logger.error('failed')
+        if not self.get_ds_dont_write_network_stores():
+            self._logger.error('failed get_ds_dont_write_network_stores; cannot continue')
             return False
 
         self._logger.debug('passed')

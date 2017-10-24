@@ -1,9 +1,9 @@
 from common import CLITieIn
 
 
-class SecurityLoggingEnabler(CLITieIn):
-    def enable_security_logging(self):
-        command = 'launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist'
+class HandoffDisabler(CLITieIn):
+    def disable_handoff(self):
+        command = '/usr/local/zetta/mac_os_scripts/shell_scripts/disable_handoff.sh'
         command_output = self.sudo_command(command)
 
         if command_output.error_level != 0:
@@ -17,8 +17,8 @@ class SecurityLoggingEnabler(CLITieIn):
         return True
 
     def run(self):
-        if not self.enable_security_logging():
-            self._logger.error('failed enable_security_logging; cannot continue')
+        if not self.disable_handoff():
+            self._logger.error('failed disable_handoff; cannot continue')
             return False
 
         self._logger.debug('passed')
@@ -33,7 +33,7 @@ if __name__ == '__main__':
     except:
         sudo_password = None
 
-    actor = SecurityLoggingEnabler(
+    actor = HandoffDisabler(
         sudo_password=sudo_password,
     )
 

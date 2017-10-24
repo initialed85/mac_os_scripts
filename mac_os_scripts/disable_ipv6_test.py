@@ -25,7 +25,7 @@ _TEST_LIST_ALL_NETWORK_SERVICES_AFTER = [
 _TEST_SET_V6_OFF_BEFORE = RunCommandOutput(
     stdout='',
     stderr='',
-    error_level=-1,
+    error_level=-0,
 )
 
 _TEST_GET_INFO_STDOUT = """Manual Configuration

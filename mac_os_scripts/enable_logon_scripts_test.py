@@ -13,7 +13,7 @@ _NO_OUTPUT = RunCommandOutput(
 )
 
 
-class MetadataFileCreationDisablerTest(unittest.TestCase):
+class LoginScriptEnablerTest(unittest.TestCase):
     def setUp(self):
         self._subject = LoginScriptEnabler(
             sudo_password='SomePassword',

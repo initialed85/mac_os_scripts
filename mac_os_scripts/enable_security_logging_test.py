@@ -29,8 +29,8 @@ class SecurityLoggingEnablerTest(unittest.TestCase):
         )
 
     def test_run_pass(self):
-        self._subject.test_enable_security_logging = MagicMock()
-        self._subject.test_enable_security_logging.return_value = True
+        self._subject.enable_security_logging = MagicMock()
+        self._subject.enable_security_logging.return_value = True
 
         assert_that(
             self._subject.run(),

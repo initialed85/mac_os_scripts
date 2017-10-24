@@ -12,3 +12,6 @@ cd /usr/local/zetta/
 
 # disable metadata file creation
 python -m mac_os_scripts.disable_metadata_file_creation
+
+# disable handoff
+python -m mac_os_scripts.disable_handoff

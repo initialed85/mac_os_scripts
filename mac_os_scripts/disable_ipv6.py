@@ -6,7 +6,7 @@ class IPv6Disabler(CLITieIn):
         command = 'networksetup -listallnetworkservices'
         command_output = self.command(command)
 
-        if command_output.stdout is None:
+        if command_output.error_level != 0:
             self._logger.error(
                 '{0} failed stating {1}'.format(
                     command, command_output
@@ -22,7 +22,7 @@ class IPv6Disabler(CLITieIn):
         command = 'networksetup -setv6off "{0}"'.format(name)
         command_output = self.sudo_command(command)
 
-        if command_output.stdout is None:
+        if command_output.error_level != 0:
             self._logger.error(
                 '{0} failed stating {1}'.format(
                     command, command_output
@@ -36,7 +36,7 @@ class IPv6Disabler(CLITieIn):
         command = 'networksetup -getinfo "{0}"'.format(name)
         command_output = self.command(command)
 
-        if command_output.stdout is None:
+        if command_output.error_level != 0:
             self._logger.error(
                 '{0} failed stating {1}'.format(
                     command, command_output
