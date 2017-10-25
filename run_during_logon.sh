@@ -15,3 +15,6 @@ python -m mac_os_scripts.disable_metadata_file_creation
 
 # disable handoff
 python -m mac_os_scripts.disable_handoff
+
+# map user drive
+python -m mac_os_scripts.map_user_drive grayfs01.grayman.com.au homedrives\$

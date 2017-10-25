@@ -21,20 +21,22 @@ def get_logger(name, max_bytes=16384, backup_count=2, also_stdout=True):
     existed = True
     if not logger.handlers:
         existed = False
+
         logger.setLevel(logging.DEBUG)
-        handler = logging.handlers.RotatingFileHandler(
-            '/tmp/mac_os_scripts_{0}.log'.format(name),
-            maxBytes=max_bytes,
-            backupCount=backup_count,
-        )
 
-        handler.setFormatter(
-            logging.Formatter(
-                '%(asctime)s %(levelname)s %(message)s'
-            )
-        )
-
-        logger.addHandler(handler)
+        # handler = logging.handlers.RotatingFileHandler(
+        #     '/tmp/mac_os_scripts_{0}.log'.format(name),
+        #     maxBytes=max_bytes,
+        #     backupCount=backup_count,
+        # )
+        #
+        # handler.setFormatter(
+        #     logging.Formatter(
+        #         '%(asctime)s %(levelname)s %(message)s'
+        #     )
+        # )
+        #
+        # logger.addHandler(handler)
 
         if also_stdout:
             handler = logging.StreamHandler()
