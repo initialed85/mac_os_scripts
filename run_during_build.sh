@@ -14,10 +14,10 @@ SUDO_PASSWORD=Password1
 cd /usr/local/zetta/
 
 # disable ipv6
-python -m mac_os_scripts.disable_ipv6 -s $SUDO_PASSWORD
+python -m mac_os_scripts.disable_ipv6 -x $SUDO_PASSWORD
 
 # enable security logging
-python -m mac_os_scripts.enable_security_logging -s $SUDO_PASSWORD
+python -m mac_os_scripts.enable_security_logging -x $SUDO_PASSWORD
 
 # enable login scripts
-python -m mac_os_scripts.enable_login_scripts -s $SUDO_PASSWORD
+python -m mac_os_scripts.enable_login_scripts -x $SUDO_PASSWORD

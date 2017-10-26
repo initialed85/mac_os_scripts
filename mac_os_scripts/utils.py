@@ -157,7 +157,7 @@ def get_argparser():
     )
 
     parser.add_argument(
-        '-s',
+        '-x',
         '--sudo-password',
         type=str,
         default=None,

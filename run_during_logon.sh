@@ -17,4 +17,4 @@ python -m mac_os_scripts.disable_handoff
 python -m mac_os_scripts.disable_metadata_file_creation
 
 # map user drive; note: -s flag is share prefix (not full share), the username will be suffixed as a folder
-python -m mac_os_scripts.map_user_drive -h grayfs01.grayman.com.au -s homedrives\$
+python -m mac_os_scripts.map_user_drive -f grayfs01.grayman.com.au -s homedrives\$

@@ -59,11 +59,11 @@ if __name__ == '__main__':
     parser = get_argparser()
 
     parser.add_argument(
-        '-h',
-        '--hostname',
+        '-f',
+        '--fqdn',
         type=str,
         required=True,
-        help='hostname (or IP or FQDN)'
+        help='FQDN of server (or hostname or IP)'
     )
 
     parser.add_argument(
@@ -86,7 +86,7 @@ if __name__ == '__main__':
     )
 
     actor.run(
-        hostname=args.hostname,
+        hostname=args.fqdn,
         share=args.share,
         username=username,
     )
