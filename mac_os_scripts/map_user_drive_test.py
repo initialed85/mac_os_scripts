@@ -23,7 +23,7 @@ _PING_FAIL = RunCommandOutput(
     stdout="""PING 6.6.6.6 (6.6.6.6): 56 data bytes
 Request timeout for icmp_seq 0
 Request timeout for icmp_seq 1
-Request timeout for icmp_seq 2
+Request timeout for icmp_seq 2clear
 
 --- 6.6.6.6 ping statistics ---
 4 packets transmitted, 0 packets received, 100.0% packet loss""",
