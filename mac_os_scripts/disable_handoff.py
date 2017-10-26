@@ -4,7 +4,7 @@ from common import CLITieIn
 class HandoffDisabler(CLITieIn):
     def disable_handoff(self):
         command = '/usr/local/zetta/mac_os_scripts/shell_scripts/disable_handoff.sh'
-        command_output = self.sudo_command(command)
+        command_output = self.command(command)
 
         if command_output.error_level != 0:
             self._logger.error(
@@ -26,15 +26,14 @@ class HandoffDisabler(CLITieIn):
 
 
 if __name__ == '__main__':
-    from sys import argv
+    from utils import get_argparser, get_args
 
-    try:
-        sudo_password = argv[1]
-    except:
-        sudo_password = None
+    parser = get_argparser()
+
+    args = get_args(parser)
 
     actor = HandoffDisabler(
-        sudo_password=sudo_password,
+        sudo_password=args.sudo_password,
     )
 
     actor.run()

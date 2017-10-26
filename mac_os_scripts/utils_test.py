@@ -1,5 +1,5 @@
 import unittest
-from os import remove
+from os import remove, environ
 
 from hamcrest import equal_to, assert_that
 
@@ -9,7 +9,17 @@ from utils import get_logger, run_command, RunCommandOutput
 class UtilsTest(unittest.TestCase):
     def test_get_logger(self):
         try:
-            remove('/tmp/mac_os_scripts_Test.log')
+            username = environ.get('USER')
+        except:
+            username = None
+
+        path = '/tmp/mac_os_scripts_{0}{1}.log'.format(
+            '{0}_'.format(username) if username is not None else '',
+            'Test',
+        )
+
+        try:
+            remove(path)
         except:
             pass
 
@@ -17,7 +27,7 @@ class UtilsTest(unittest.TestCase):
 
         logger.debug('some message')
 
-        with open('/tmp/mac_os_scripts_Test.log', 'r') as f:
+        with open(path, 'r') as f:
             data = f.read()
 
         assert_that(

@@ -1,7 +1,7 @@
 import unittest
 
 from hamcrest import assert_that, equal_to
-from mock import MagicMock
+from mock import MagicMock, call
 
 from mac_os_scripts.disable_ipv6 import IPv6Disabler
 from utils import RunCommandOutput
@@ -65,6 +65,13 @@ class IPv6DisableTest(unittest.TestCase):
             equal_to(_TEST_LIST_ALL_NETWORK_SERVICES_AFTER)
         )
 
+        assert_that(
+            self._subject.run_command.mock_calls,
+            equal_to([
+                call(command_line='networksetup -listallnetworkservices', quiet=True, sudo_password_override=False)
+            ])
+        )
+
     def test_set_v6_off(self):
         self._subject.run_command.return_value = _TEST_SET_V6_OFF_BEFORE
 
@@ -73,12 +80,28 @@ class IPv6DisableTest(unittest.TestCase):
             equal_to(True)
         )
 
+        assert_that(
+            self._subject.run_command.mock_calls,
+            equal_to([
+                call(command_line='networksetup -setv6off "Thunderbolt Ethernet"', quiet=True,
+                     sudo_password_override=None)
+            ])
+        )
+
     def test_get_info(self):
         self._subject.run_command.return_value = _TEST_GET_INFO_BEFORE
 
         assert_that(
             self._subject.get_info('Thunderbolt Ethernet'),
             equal_to(_TEST_GET_INFO_AFTER)
+        )
+
+        assert_that(
+            self._subject.run_command.mock_calls,
+            equal_to([
+                call(command_line='networksetup -getinfo "Thunderbolt Ethernet"', quiet=True,
+                     sudo_password_override=False)
+            ])
         )
 
     def test_run_pass(self):

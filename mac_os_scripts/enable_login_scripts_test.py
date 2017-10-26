@@ -1,16 +1,10 @@
 import unittest
 
 from hamcrest import assert_that, equal_to
-from mock import MagicMock
+from mock import MagicMock, call
 
+from mac_os_scripts.disable_handoff_test import _NO_OUTPUT
 from mac_os_scripts.enable_login_scripts import LoginScriptEnabler
-from utils import RunCommandOutput
-
-_NO_OUTPUT = RunCommandOutput(
-    stdout='',
-    stderr='',
-    error_level=0,
-)
 
 
 class LoginScriptEnablerTest(unittest.TestCase):
@@ -29,12 +23,30 @@ class LoginScriptEnablerTest(unittest.TestCase):
             equal_to(True)
         )
 
+        assert_that(
+            self._subject.run_command.mock_calls,
+            equal_to([
+                call(
+                    command_line='defaults write /var/root/Library/Preferences/com.apple.loginwindow EnableMCXLoginScripts TRUE',
+                    quiet=True, sudo_password_override=None)
+            ])
+        )
+
     def test_set_mcx_script_trust(self):
         self._subject.run_command.return_value = _NO_OUTPUT
 
         assert_that(
             self._subject.set_mcx_script_trust(self._subject._trust_level),
             equal_to(True)
+        )
+
+        assert_that(
+            self._subject.run_command.mock_calls,
+            equal_to([
+                call(
+                    command_line='defaults write var/root/Library/Preferences/com.apple.loginwindow MCXScriptTrust -string FullTrust',
+                    quiet=True, sudo_password_override=None)
+            ])
         )
 
     def test_run_pass(self):

@@ -1,7 +1,7 @@
 import unittest
 
 from hamcrest import assert_that, equal_to
-from mock import MagicMock
+from mock import MagicMock, call
 
 from mac_os_scripts.enable_security_logging import SecurityLoggingEnabler
 from utils import RunCommandOutput
@@ -26,6 +26,14 @@ class SecurityLoggingEnablerTest(unittest.TestCase):
         assert_that(
             self._subject.enable_security_logging(),
             equal_to(True)
+        )
+
+        assert_that(
+            self._subject.run_command.mock_calls,
+            equal_to([
+                call(command_line='launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist', quiet=True,
+                     sudo_password_override=None)
+            ])
         )
 
     def test_run_pass(self):

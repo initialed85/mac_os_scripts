@@ -88,15 +88,14 @@ class IPv6Disabler(CLITieIn):
 
 
 if __name__ == '__main__':
-    from sys import argv
+    from utils import get_argparser, get_args
 
-    try:
-        sudo_password = argv[1]
-    except:
-        sudo_password = None
+    parser = get_argparser()
+
+    args = get_args(parser)
 
     actor = IPv6Disabler(
-        sudo_password=sudo_password,
+        sudo_password=args.sudo_password,
     )
 
     actor.run()

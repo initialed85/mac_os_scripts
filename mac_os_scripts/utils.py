@@ -1,6 +1,8 @@
+import argparse
 import collections
 import logging
 import logging.handlers
+import os
 import subprocess
 import traceback
 
@@ -24,26 +26,34 @@ def get_logger(name, max_bytes=16384, backup_count=2, also_stdout=True):
 
         logger.setLevel(logging.DEBUG)
 
-        # handler = logging.handlers.RotatingFileHandler(
-        #     '/tmp/mac_os_scripts_{0}.log'.format(name),
-        #     maxBytes=max_bytes,
-        #     backupCount=backup_count,
-        # )
-        #
-        # handler.setFormatter(
-        #     logging.Formatter(
-        #         '%(asctime)s %(levelname)s %(message)s'
-        #     )
-        # )
-        #
-        # logger.addHandler(handler)
+        try:
+            username = os.environ.get('USER')
+        except:
+            username = None
+
+        handler = logging.handlers.RotatingFileHandler(
+            '/tmp/mac_os_scripts_{0}{1}.log'.format(
+                '{0}_'.format(username) if username is not None else '',
+                name,
+            ),
+            maxBytes=max_bytes,
+            backupCount=backup_count,
+        )
+
+        handler.setFormatter(
+            logging.Formatter(
+                '%(asctime)s %(levelname)s %(message)s'
+            )
+        )
+
+        logger.addHandler(handler)
 
         if also_stdout:
             handler = logging.StreamHandler()
 
             handler.setFormatter(
                 logging.Formatter(
-                    '%(asctime)s %(levelname)s %(message)s'
+                    '%(asctime)s %(levelname)s ' + str(name) + ' %(message)s'
                 )
             )
 
@@ -137,3 +147,25 @@ def run_command(command_line, quiet=True):
     log(logger.debug, 'returning {0}'.format(run_command_output))
 
     return run_command_output
+
+
+def get_argparser():
+    parser = argparse.ArgumentParser(
+        description='Mac OS scripts - {0}'.format(
+            os.path.split(__file__)[1],
+        ),
+    )
+
+    parser.add_argument(
+        '-s',
+        '--sudo-password',
+        type=str,
+        default=None,
+        help='sudo password to use for this script'
+    )
+
+    return parser
+
+
+def get_args(parser):
+    return parser.parse_args()

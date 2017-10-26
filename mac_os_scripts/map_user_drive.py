@@ -1,15 +1,12 @@
-# TODO: Remove all credentials and domain stuff; not needed
-# open smb://grayfs01.grayman.com.au/homedrives$/test.test
-
 import os
 
 from common import CLITieIn
 
 
 class UserDriveMapper(CLITieIn):
-    def map_user_drive(self, server, share, username):
-        command = 'open "smb://{0}/{1}/{2}"'.format(
-            server, share, username
+    def ping_hostname(self, hostname):
+        command = 'ping -c 4 -W 1000 -t 5 {0}"'.format(
+            hostname,
         )
         command_output = self.command(command)
 
@@ -23,9 +20,29 @@ class UserDriveMapper(CLITieIn):
 
         return True
 
-    def run(self, server, share, username):
+    def map_user_drive(self, hostname, share, username):
+        command = 'open "smb://{0}/{1}/{2}"'.format(
+            hostname, share, username
+        )
+        command_output = self.command(command)
+
+        if command_output.error_level != 0:
+            self._logger.error(
+                '{0} failed stating {1}'.format(
+                    command, command_output
+                )
+            )
+            return False
+
+        return True
+
+    def run(self, hostname, share, username):
+        if not self.ping_hostname(hostname=hostname):
+            self._logger.error('failed to ping {0}; cannot continue mapping user drive'.format(hostname))
+            return False
+
         if not self.map_user_drive(
-                server=server,
+                hostname=hostname,
                 share=share,
                 username=username,
         ):
@@ -37,17 +54,27 @@ class UserDriveMapper(CLITieIn):
 
 
 if __name__ == '__main__':
-    from sys import argv
+    from utils import get_argparser, get_args
 
-    try:
-        server = argv[1]
-    except:
-        raise Exception('arg 1 (server) missing; cannot continue')
+    parser = get_argparser()
 
-    try:
-        share = argv[2]
-    except:
-        raise Exception('arg 2 (share) missing; cannot continue')
+    parser.add_argument(
+        '-h',
+        '--hostname',
+        type=str,
+        required=True,
+        help='hostname (or IP or FQDN)'
+    )
+
+    parser.add_argument(
+        '-s',
+        '--share',
+        type=str,
+        required=True,
+        help='base share name (will be suffixed with /(logged on username)'
+    )
+
+    args = get_args(parser)
 
     try:
         username = os.environ['USER']
@@ -55,10 +82,11 @@ if __name__ == '__main__':
         raise Exception('unable to get USER environment variable; cannot continue')
 
     actor = UserDriveMapper(
+        sudo_password=args.sudo_password,
     )
 
     actor.run(
-        server=server,
-        share=share,
+        hostname=args.hostname,
+        share=args.share,
         username=username,
     )

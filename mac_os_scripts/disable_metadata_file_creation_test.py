@@ -1,7 +1,7 @@
 import unittest
 
 from hamcrest import assert_that, equal_to
-from mock import MagicMock
+from mock import MagicMock, call
 
 from mac_os_scripts.disable_metadata_file_creation import MetadataFileCreationDisabler
 from utils import RunCommandOutput
@@ -34,12 +34,28 @@ class MetadataFileCreationDisablerTest(unittest.TestCase):
             equal_to(True)
         )
 
+        assert_that(
+            self._subject.run_command.mock_calls,
+            equal_to([
+                call(command_line='defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true',
+                     quiet=True, sudo_password_override=False)
+            ])
+        )
+
     def test_get_ds_dont_write_network_stores(self):
         self._subject.run_command.return_value = _TEST_GET_DS_DONT_WRITE_NETWORK_STORES
 
         assert_that(
             self._subject.get_ds_dont_write_network_stores(),
             equal_to(True)
+        )
+
+        assert_that(
+            self._subject.run_command.mock_calls,
+            equal_to([
+                call(command_line='defaults read com.apple.desktopservices DSDontWriteNetworkStores', quiet=True,
+                     sudo_password_override=False)
+            ])
         )
 
     def test_run_pass(self):

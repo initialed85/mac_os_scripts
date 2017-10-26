@@ -58,16 +58,23 @@ class LoginScriptEnabler(CLITieIn):
 
 
 if __name__ == '__main__':
-    from sys import argv
+    from utils import get_argparser, get_args
 
-    try:
-        sudo_password = argv[1]
-    except:
-        sudo_password = None
+    parser = get_argparser()
+
+    parser.add_argument(
+        '-t',
+        '--trust-level',
+        type=str,
+        required=True,
+        help='trust level to use (FullTrust, PartialTrust or Anonymous)'
+    )
+
+    args = get_args(parser)
 
     actor = LoginScriptEnabler(
-        sudo_password=sudo_password,
-        trust_level='FullTrust',
+        sudo_password=args.sudo_password,
+        trust_level=args.trust_level,
     )
 
     actor.run()
