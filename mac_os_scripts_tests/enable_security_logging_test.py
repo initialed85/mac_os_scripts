@@ -4,7 +4,7 @@ from hamcrest import assert_that, equal_to
 from mock import MagicMock, call
 
 from mac_os_scripts.enable_security_logging import SecurityLoggingEnabler
-from utils import RunCommandOutput
+from mac_os_scripts.utils import RunCommandOutput
 
 _TEST_ENABLE_SECURITY_LOGGING = RunCommandOutput(
     stdout='/System/Library/LaunchDaemons/com.apple.auditd.plist: service already loaded',

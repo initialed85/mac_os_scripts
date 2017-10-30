@@ -3,7 +3,7 @@ from os import remove, environ
 
 from hamcrest import equal_to, assert_that
 
-from utils import get_logger, run_command, RunCommandOutput
+from mac_os_scripts.utils import get_logger, run_command, RunCommandOutput
 
 
 class UtilsTest(unittest.TestCase):

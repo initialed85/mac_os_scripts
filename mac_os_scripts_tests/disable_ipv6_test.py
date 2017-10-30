@@ -4,7 +4,7 @@ from hamcrest import assert_that, equal_to
 from mock import MagicMock, call
 
 from mac_os_scripts.disable_ipv6 import IPv6Disabler
-from utils import RunCommandOutput
+from mac_os_scripts.utils import RunCommandOutput
 
 _TEST_LIST_ALL_NETWORK_SERVICES_STDOUT = """An asterisk (*) denotes that a network service is disabled.
 Thunderbolt Ethernet

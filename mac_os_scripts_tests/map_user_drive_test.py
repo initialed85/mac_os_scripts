@@ -3,9 +3,9 @@ import unittest
 from hamcrest import assert_that, equal_to
 from mock import MagicMock, call
 
-from mac_os_scripts.disable_handoff_test import _NO_OUTPUT
 from mac_os_scripts.map_user_drive import UserDriveMapper
-from utils import RunCommandOutput
+from mac_os_scripts.utils import RunCommandOutput
+from mac_os_scripts_tests.disable_handoff_test import _NO_OUTPUT
 
 _PING_PASS = RunCommandOutput(
     stdout="""PING 192.168.0.1 (192.168.0.1): 56 data bytes

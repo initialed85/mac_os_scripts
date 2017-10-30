@@ -4,7 +4,7 @@ from hamcrest import assert_that, equal_to
 from mock import MagicMock, call
 
 from mac_os_scripts.disable_handoff import HandoffDisabler
-from utils import RunCommandOutput
+from mac_os_scripts.utils import RunCommandOutput
 
 _NO_OUTPUT = RunCommandOutput(
     stdout='',

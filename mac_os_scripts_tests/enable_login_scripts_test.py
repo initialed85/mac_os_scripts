@@ -3,8 +3,8 @@ import unittest
 from hamcrest import assert_that, equal_to
 from mock import MagicMock, call
 
-from mac_os_scripts.disable_handoff_test import _NO_OUTPUT
 from mac_os_scripts.enable_login_scripts import LoginScriptEnabler
+from mac_os_scripts_tests.disable_handoff_test import _NO_OUTPUT
 
 
 class LoginScriptEnablerTest(unittest.TestCase):
