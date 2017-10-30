@@ -1,3 +1,15 @@
+"""
+
+This script is responsible for the disabling IPv6 on all interfaces
+
+Commands used:
+
+- networksetup -listallnetworkservices
+- networksetup -setv6off (interface)
+- networksetup -getinfo (interface
+
+"""
+
 from common import CLITieIn
 
 

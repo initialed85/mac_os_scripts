@@ -82,7 +82,7 @@ pass in quick on en0 inet proto tcp from 192.168.1.1 to any port 22
 pass in quick on en0 inet proto tcp from 192.168.1.2 to any port 22
 
 # drop SSH for all other hosts
-block drop in quick on en0 inet proto tcp from 192.168.137.2 to any port 22
+block drop in quick on en0 inet proto tcp from any to any port 22
 """
 
 
@@ -151,7 +151,7 @@ class RestrictedSSHEnablerTest(unittest.TestCase):
             equal_to([
                 call(command_line='pfctl -d', quiet=True, sudo_password_override=None),
                 call(command_line='pfctl -F all', quiet=True, sudo_password_override=None),
-                call(command_line='pfctl -f /etc/pf.conf -e ', quiet=True, sudo_password_override=None)
+                call(command_line='pfctl -f /etc/pf.conf -e', quiet=True, sudo_password_override=None)
             ])
         )
 

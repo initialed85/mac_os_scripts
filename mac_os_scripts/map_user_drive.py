@@ -1,3 +1,14 @@
+"""
+
+This script is responsible for the mapping the user SMB share
+
+Commands used:
+
+- ping -c 4 -W 1000 -t 5 (file server)
+- open "smb://(file server)/(user share)/(user)
+
+"""
+
 import os
 
 from common import CLITieIn

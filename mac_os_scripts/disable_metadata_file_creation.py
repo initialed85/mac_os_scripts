@@ -1,3 +1,14 @@
+"""
+
+This script is responsible for the disabling the creation of .DS_Store files
+
+Commands used:
+
+- defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+- defaults read com.apple.desktopservices DSDontWriteNetworkStores
+
+"""
+
 from common import CLITieIn
 
 

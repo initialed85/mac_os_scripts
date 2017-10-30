@@ -1,3 +1,21 @@
+"""
+
+This script is responsible for the enabling scripts to be run at logon time
+
+Commands used:
+
+- systemsetup -setremotelogin on
+- (in /etc/pf.conf)
+    - pass in quick on en0 inet proto tcp from (host) to any port 22
+    - block drop in quick on en0 inet proto tcp from any to any port 22
+- pfctl -d
+- pfctl -F all
+- pfctl -f /etc/pf.conf -e
+
+"""
+
+# TODO: change firewall lines to block on all interfaces, not just en0
+
 from common import CLITieIn
 
 
@@ -34,7 +52,7 @@ class RestrictedSSHEnabler(CLITieIn):
             data += (
                 '\n'
                 '# drop SSH for all other hosts\n'
-                'block drop in quick on en0 inet proto tcp from 192.168.137.2 to any port 22\n'
+                'block drop in quick on en0 inet proto tcp from any to any port 22\n'
             )
 
             data = data.replace('\r', '')
@@ -49,7 +67,7 @@ class RestrictedSSHEnabler(CLITieIn):
         commands = [
             'pfctl -d',
             'pfctl -F all',
-            'pfctl -f /etc/pf.conf -e ',
+            'pfctl -f /etc/pf.conf -e',
         ]
         failed = False
         for command in commands:

@@ -1,3 +1,14 @@
+"""
+
+This script is responsible for the enabling scripts to be run at logon time
+
+Commands used:
+
+- defaults write /var/root/Library/Preferences/com.apple.loginwindow EnableMCXLoginScripts TRUE
+- defaults write var/root/Library/Preferences/com.apple.loginwindow MCXScriptTrust -string (trust level)
+
+"""
+
 from common import CLITieIn
 
 

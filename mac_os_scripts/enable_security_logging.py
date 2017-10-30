@@ -1,3 +1,13 @@
+"""
+
+This script is responsible for the enabling security logging
+
+Commands used:
+
+- launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist
+
+"""
+
 from common import CLITieIn
 
 
