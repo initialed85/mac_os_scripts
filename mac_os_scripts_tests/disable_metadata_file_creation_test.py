@@ -4,7 +4,7 @@ from hamcrest import assert_that, equal_to
 from mock import MagicMock, call
 
 from mac_os_scripts.disable_metadata_file_creation import MetadataFileCreationDisabler
-from utils import RunCommandOutput
+from mac_os_scripts.utils import RunCommandOutput
 
 _TEST_SET_DS_DONT_WRITE_NETWORK_STORES = RunCommandOutput(
     stdout='',
