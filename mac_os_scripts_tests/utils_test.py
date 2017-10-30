@@ -3,7 +3,7 @@ from os import remove, environ
 
 from hamcrest import equal_to, assert_that
 
-from mac_os_scripts.utils import get_logger, run_command, RunCommandOutput
+from mac_os_scripts.utils import get_logger, run_command, RunCommandOutput, read_file, write_file
 
 
 class UtilsTest(unittest.TestCase):
@@ -48,3 +48,25 @@ class UtilsTest(unittest.TestCase):
                 RunCommandOutput(stdout='', stderr='/bin/sh: spicy: command not found', error_level=127)
             )
         )
+
+    def test_read_file(self):
+        with open('test_file.txt', 'w') as f:
+            f.write('some data')
+
+        assert_that(
+            read_file('test_file.txt'),
+            equal_to('some data')
+        )
+
+        remove('test_file.txt')
+
+    def test_write_file(self):
+        write_file('test_file.txt', 'some data')
+
+        with open('test_file.txt', 'r') as f:
+            assert_that(
+                f.read(),
+                equal_to('some data')
+            )
+
+        remove('test_file.txt')

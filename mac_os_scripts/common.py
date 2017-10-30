@@ -1,4 +1,4 @@
-from utils import get_logger, run_command
+from utils import get_logger, run_command, read_file, write_file
 
 
 class CLITieIn(object):
@@ -47,3 +47,9 @@ class CLITieIn(object):
             quiet=quiet,
             sudo_password_override=sudo_password_override,
         )
+
+    def read_file(self, path):
+        return read_file(path)
+
+    def write_file(self, path, data):
+        return write_file(path, data)

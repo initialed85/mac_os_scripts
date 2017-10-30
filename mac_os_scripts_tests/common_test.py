@@ -59,3 +59,25 @@ class CLITieInTest(unittest.TestCase):
                 call(command_line='some command', quiet=True)
             ])
         )
+
+    @patch('mac_os_scripts.common.read_file')
+    def test_read_file(self, read_file):
+        self._subject.read_file('/some/path')
+
+        assert_that(
+            read_file.mock_calls,
+            equal_to([
+                call('/some/path')
+            ])
+        )
+
+    @patch('mac_os_scripts.common.write_file')
+    def test_write_file(self, write_file):
+        self._subject.write_file('/some/path', 'some data')
+
+        assert_that(
+            write_file.mock_calls,
+            equal_to([
+                call('/some/path', 'some data')
+            ])
+        )
