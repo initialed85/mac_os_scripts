@@ -13,11 +13,6 @@ from common import CLITieIn
 
 
 class LoginScriptEnabler(CLITieIn):
-    def __init__(self, trust_level, *args, **kwargs):
-        super(LoginScriptEnabler, self).__init__(*args, **kwargs)
-
-        self._trust_level = trust_level
-
     def enable_mcx_login_scripts(self):
         command = 'defaults write /var/root/Library/Preferences/com.apple.loginwindow EnableMCXLoginScripts TRUE'
         command_output = self.sudo_command(command)
@@ -32,14 +27,14 @@ class LoginScriptEnabler(CLITieIn):
 
         return True
 
-    def set_mcx_script_trust(self, value):
+    def set_mcx_script_trust(self, trust_level):
         """
 
         :param value: string FullTrust, PartialTrust or Anonymous
         :return:
         """
         command = 'defaults write var/root/Library/Preferences/com.apple.loginwindow MCXScriptTrust -string {0}'.format(
-            value
+            trust_level
         )
         command_output = self.sudo_command(command)
 
@@ -53,14 +48,14 @@ class LoginScriptEnabler(CLITieIn):
 
         return True
 
-    def run(self):
+    def run(self, trust_level):
         if not self.enable_mcx_login_scripts():
             self._logger.error('failed enable_mcx_login_scripts; cannot continue')
             return False
 
-        if not self.set_mcx_script_trust(self._trust_level):
+        if not self.set_mcx_script_trust(trust_level):
             self._logger.error('failed set_mcx_script_trust with trust_level {0}; cannot continue'.format(
-                repr(self._trust_level)
+                repr(trust_level)
             ))
             return False
 
@@ -85,7 +80,8 @@ if __name__ == '__main__':
 
     actor = LoginScriptEnabler(
         sudo_password=args.sudo_password,
-        trust_level=args.trust_level,
     )
 
-    actor.run()
+    actor.run(
+        trust_level=args.trust_level,
+    )

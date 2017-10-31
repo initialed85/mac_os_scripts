@@ -11,7 +11,7 @@ class LoginScriptEnablerTest(unittest.TestCase):
     def setUp(self):
         self._subject = LoginScriptEnabler(
             sudo_password='SomePassword',
-            trust_level='FullTrust',
+
         )
         self._subject.run_command = MagicMock()
 
@@ -36,7 +36,9 @@ class LoginScriptEnablerTest(unittest.TestCase):
         self._subject.run_command.return_value = _NO_OUTPUT
 
         assert_that(
-            self._subject.set_mcx_script_trust(self._subject._trust_level),
+            self._subject.set_mcx_script_trust(
+                trust_level='FullTrust'
+            ),
             equal_to(True)
         )
 
@@ -56,6 +58,8 @@ class LoginScriptEnablerTest(unittest.TestCase):
         self._subject.set_mcx_script_trust.return_value = True
 
         assert_that(
-            self._subject.run(),
+            self._subject.run(
+                trust_level='FullTrust',
+            ),
             equal_to(True)
         )
