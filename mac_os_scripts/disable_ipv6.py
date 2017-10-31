@@ -1,6 +1,6 @@
 """
 
-This script is responsible for the disabling IPv6 on all interfaces
+This script is responsible for disabling IPv6 on all interfaces
 
 Commands used:
 

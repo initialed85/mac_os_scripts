@@ -1,6 +1,6 @@
 """
 
-This script is responsible for the enabling scripts to be run at logon time
+This script is responsible for enabling NTP and setting the NTP server
 
 Commands used:
 
@@ -13,8 +13,8 @@ from common import CLITieIn
 
 
 class NTPConfigurator(CLITieIn):
-    def set_ntp_time(self):
-        command = 'defaults write /var/root/Library/Preferences/com.apple.loginwindow EnableMCXLoginScripts TRUE'
+    def enable_ntp(self):
+        command = 'systemsetup -setusingnetworktime on'
         command_output = self.sudo_command(command)
 
         if command_output.error_level != 0:
@@ -27,15 +27,27 @@ class NTPConfigurator(CLITieIn):
 
         return True
 
-    def run(self):
-        if not self.enable_mcx_login_scripts():
-            self._logger.error('failed enable_mcx_login_scripts; cannot continue')
+    def set_ntp_server(self, server):
+        command = 'systemsetup -setnetworktimeserver {0}'.format(server)
+        command_output = self.sudo_command(command)
+
+        if command_output.error_level != 0:
+            self._logger.error(
+                '{0} failed stating {1}'.format(
+                    command, command_output
+                )
+            )
             return False
 
-        if not self.set_mcx_script_trust(self._trust_level):
-            self._logger.error('failed set_mcx_script_trust with trust_level {0}; cannot continue'.format(
-                repr(self._trust_level)
-            ))
+        return True
+
+    def run(self, server):
+        if not self.enable_ntp():
+            self._logger.error('failed enable_ntp; cannot continue')
+            return False
+
+        if not self.set_ntp_server(server):
+            self._logger.error('failed set_ntp_server; cannot continue')
             return False
 
         self._logger.debug('passed')
@@ -47,10 +59,20 @@ if __name__ == '__main__':
 
     parser = get_argparser()
 
+    parser.add_argument(
+        '-s',
+        '--server',
+        type=str,
+        required=True,
+        help='NTP server to use'
+    )
+
     args = get_args(parser)
 
     actor = NTPConfigurator(
         sudo_password=args.sudo_password,
     )
 
-    actor.run()
+    actor.run(
+        server=args.server,
+    )

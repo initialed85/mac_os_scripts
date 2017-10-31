@@ -1,6 +1,6 @@
 """
 
-This script is responsible for the disabling the creation of .DS_Store files
+This script is responsible for disabling the creation of .DS_Store files
 
 Commands used:
 

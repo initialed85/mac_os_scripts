@@ -1,6 +1,6 @@
 """
 
-This script is responsible for the mapping the user SMB share
+This script is responsible for mapping the user's shared drive
 
 Commands used:
 

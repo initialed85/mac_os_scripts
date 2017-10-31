@@ -1,6 +1,6 @@
 """
 
-This script is responsible for the disabling Handoff
+This script is responsible for disabling Handoff
 
 Commands used:
 

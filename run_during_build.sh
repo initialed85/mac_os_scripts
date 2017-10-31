@@ -12,6 +12,12 @@
 # the build user has)
 SUDO_PASSWORD=Password1
 
+# this is a comma-separated list of IPs allowed to SSH into machines
+SSH_ALLOWED_HOSTS=192.168.1.1,192.168.1.2
+
+# this is the ntp server to configure
+NTP_SERVER=time1.google.com
+
 # need to run scripts from here because of Python path requirements
 cd /usr/local/zetta/
 
@@ -25,4 +31,7 @@ python -m mac_os_scripts.enable_security_logging -x $SUDO_PASSWORD
 python -m mac_os_scripts.enable_login_scripts -x $SUDO_PASSWORD
 
 # enable restricted ssh for specified hosts
-python -m mac_os_scripts.enable_restricted_ssh -x $SUDO_PASSWORD -a 192.168.1.1,192.168.1.2
+python -m mac_os_scripts.enable_restricted_ssh -x $SUDO_PASSWORD -a $SSH_ALLOWED_HOSTS
+
+# enable ntp and set ntp server
+python -m mac_os_scripts.configure_ntp -x $SUDO_PASSWORD -s $NTP_SERVER

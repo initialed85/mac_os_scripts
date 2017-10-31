@@ -1,6 +1,6 @@
 """
 
-This script is responsible for the changing of the desktop background.
+This script is responsible for changing the desktop background.
 
 Commands used:
 

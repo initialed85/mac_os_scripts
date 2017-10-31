@@ -1,6 +1,6 @@
 """
 
-This script is responsible for the enabling scripts to be run at logon time
+This script is responsible for enabling scripts to be run at logon time
 
 Commands used:
 

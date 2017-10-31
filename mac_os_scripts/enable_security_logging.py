@@ -1,6 +1,6 @@
 """
 
-This script is responsible for the enabling security logging
+This script is responsible for enabling security logging
 
 Commands used:
 
