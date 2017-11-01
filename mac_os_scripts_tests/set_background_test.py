@@ -3,7 +3,7 @@ import unittest
 from hamcrest import assert_that, equal_to
 from mock import MagicMock, call
 
-from mac_os_scripts.change_background import BackgroundChanger
+from mac_os_scripts.set_background import BackgroundChanger
 from mac_os_scripts_tests.test_common import _NO_OUTPUT
 
 

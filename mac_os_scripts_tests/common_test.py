@@ -65,7 +65,7 @@ class CLITieInTest(unittest.TestCase):
         self._subject.read_file('/some/path')
 
         assert_that(
-            read_file.mock_calls,
+            [x for x in read_file.mock_calls if '__' not in repr(x)],
             equal_to([
                 call('/some/path')
             ])

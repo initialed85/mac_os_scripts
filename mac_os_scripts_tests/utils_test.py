@@ -1,17 +1,27 @@
 import unittest
-from os import remove, environ
+from os import remove
 
 from hamcrest import equal_to, assert_that
+from mock import patch
 
-from mac_os_scripts.utils import get_logger, run_command, RunCommandOutput, read_file, write_file
+from mac_os_scripts.utils import get_username, get_logger, run_command, RunCommandOutput, read_file, write_file
 
 
 class UtilsTest(unittest.TestCase):
-    def test_get_logger(self):
-        try:
-            username = environ.get('USER')
-        except:
-            username = None
+    @patch('mac_os_scripts.utils.os.environ')
+    def test_get_username(self, environ):
+        environ.get.return_value = 'SomeUser'
+
+        assert_that(
+            get_username(),
+            equal_to('SomeUser')
+        )
+
+    @patch('mac_os_scripts.utils.get_username')
+    def test_get_logger(self, get_username):
+        username = 'SomeUser'
+
+        get_username.return_value = username
 
         path = '/tmp/mac_os_scripts_{0}{1}.log'.format(
             '{0}_'.format(username) if username is not None else '',

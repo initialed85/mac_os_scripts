@@ -1,6 +1,6 @@
 """
 
-This script is responsible for setting the logo for the current user (needs sudo)
+This script is responsible for setting the logo for the current user
 
 Commands used:
 
@@ -70,7 +70,7 @@ if __name__ == '__main__':
         '--logo-path',
         type=str,
         required=True,
-        help='path for background file to use'
+        help='path for user account logo file to use (normally .tif)'
     )
 
     args = get_args(parser)

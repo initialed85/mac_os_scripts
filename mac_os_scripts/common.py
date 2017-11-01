@@ -9,7 +9,9 @@ class CLITieIn(object):
         self._logger.debug('created')
 
     def get_username(self):
-        return get_username()
+        username = get_username()
+        self._logger.debug('get_username={0}'.format(username))
+        return username
 
     def run_command(self, command_line, quiet=True, sudo_password_override=None):
         sudo_password = self._sudo_password
@@ -38,6 +40,7 @@ class CLITieIn(object):
         return command_output
 
     def command(self, command_line, quiet=True):
+        self._logger.debug('command invoked')
         return self.run_command(
             command_line=command_line,
             quiet=quiet,
@@ -45,6 +48,7 @@ class CLITieIn(object):
         )
 
     def sudo_command(self, command_line, quiet=True, sudo_password_override=None):
+        self._logger.debug('sudo_command invoked')
         return self.run_command(
             command_line=command_line,
             quiet=quiet,
@@ -52,7 +56,13 @@ class CLITieIn(object):
         )
 
     def read_file(self, path):
-        return read_file(path)
+        self._logger.debug('reading file from {0}'.format(repr(path)))
+        data = read_file(path)
+        self._logger.debug('read {0} bytes'.format(len(data)))
+        return data
 
     def write_file(self, path, data):
-        return write_file(path, data)
+        self._logger.debug('writing file to {0}'.format(repr(path)))
+        result = write_file(path, data)
+        self._logger.debug('wrote {0} bytes'.format(len(data)))
+        return result
