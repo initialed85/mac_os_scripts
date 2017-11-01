@@ -52,3 +52,8 @@ python -m mac_os_scripts.disable_core_dump -x $SUDO_PASSWORD
 
 # enable restricted IBSS (ad-hoc/computer-to-computer wireless networking)
 python -m mac_os_scripts.enable_restricted_ibss -x $SUDO_PASSWORD
+
+# register a computer account on the domain for this machine
+# WARNING: this password needs to be correctly escaped- e.g. "Password\ 123\!\@\#" (without
+# the quotes)
+python -m mac_os_scripts.register_computer_account -g ComputerGroup -o Users.Developers -d some.domain.com -u some.admin -p P\@\$\$w0rd123\!\@\# -c $HOSTNAME
