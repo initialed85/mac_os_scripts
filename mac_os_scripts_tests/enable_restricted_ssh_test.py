@@ -72,11 +72,11 @@ load anchor "com.apple" from "/etc/pf.anchors/com.apple
 # !!!! added by Zetta (WARNING: place any other rules above this line)
 
 # permit SSH for certain hosts
-pass in quick on en0 inet proto tcp from 192.168.1.1 to any port 22
-pass in quick on en0 inet proto tcp from 192.168.1.2 to any port 22
+pass in quick inet proto tcp from 192.168.1.1 to any port 22
+pass in quick inet proto tcp from 192.168.1.2 to any port 22
 
 # drop SSH for all other hosts
-block drop in quick on en0 inet proto tcp from any to any port 22
+block drop in quick inet proto tcp from any to any port 22
 """
 
 
