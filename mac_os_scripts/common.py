@@ -1,4 +1,4 @@
-from utils import get_username, get_logger, run_command, read_file, write_file
+from utils import get_username, get_hostname, get_logger, run_command, read_file, write_file
 
 
 class CLITieIn(object):
@@ -12,6 +12,11 @@ class CLITieIn(object):
         username = get_username()
         self._logger.debug('get_username={0}'.format(username))
         return username
+
+    def get_hostname(self):
+        hostname = get_hostname()
+        self._logger.debug('get_hostname={0}'.format(hostname))
+        return hostname
 
     def run_command(self, command_line, quiet=True, sudo_password_override=None):
         sudo_password = self._sudo_password
@@ -35,9 +40,20 @@ class CLITieIn(object):
             command_line=command_line,
             quiet=quiet
         )
-        self._logger.debug('returned:\n{0}\n'.format(
-            command_output.rstrip()
-        ))
+
+        if command_output.stdout is not None:
+            self._logger.debug('returned STDOUT:\n{0}\n'.format(
+                command_output.stdout.rstrip()
+            ))
+        else:
+            self._logger.debug('returned STDOUT: None')
+
+        if command_output.stderr is not None:
+            self._logger.debug('returned STDERR:\n{0}\n'.format(
+                command_output.stderr.rstrip()
+            ))
+        else:
+            self._logger.debug('returned STDERR: None')
 
         return command_output
 

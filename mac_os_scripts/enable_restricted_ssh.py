@@ -12,8 +12,6 @@ Commands used:
 - pfctl -F all
 - pfctl -f /etc/pf.conf -e
 
-sudo pfctl -d; sudo pfctl -F all; sudo pfctl -f /etc/pf.conf -e
-
 """
 
 from common import CLITieIn
@@ -58,10 +56,10 @@ class RestrictedSSHEnabler(CLITieIn):
             data = data.replace('\r', '')
 
             self.write_file('/etc/pf.conf', data)
-
-            return True
         except:
             return False
+
+        return True
 
     def restart_firewall(self):
         commands = [

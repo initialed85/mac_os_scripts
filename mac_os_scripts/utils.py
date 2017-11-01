@@ -17,6 +17,14 @@ def get_username():
     return username
 
 
+def get_hostname():
+    hostname = os.environ.get('HOSTNAME', False)
+    if hostname is False:
+        raise KeyError('failed to get hostname from $HOSTNAME')
+
+    return hostname
+
+
 def get_logger(name, max_bytes=16384, backup_count=2, also_stdout=True):
     logger = logging.getLogger(name)
     existed = True

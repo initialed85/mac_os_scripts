@@ -30,11 +30,11 @@ class AuditingFlagsConfigurator(CLITieIn):
                     output += line + '\n'
 
             self.write_file('/etc/security/audit_control', output)
-
-            return True
         except:
             self._logger.error(traceback.format_exc())
             return False
+
+        return True
 
     def run(self):
         if not self.modify_security_auditing_flags():

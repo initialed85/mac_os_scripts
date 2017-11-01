@@ -4,7 +4,8 @@ from os import remove
 from hamcrest import equal_to, assert_that
 from mock import patch
 
-from mac_os_scripts.utils import get_username, get_logger, run_command, RunCommandOutput, read_file, write_file
+from mac_os_scripts.utils import get_username, get_hostname, get_logger, run_command, RunCommandOutput, read_file, \
+    write_file
 
 
 class UtilsTest(unittest.TestCase):
@@ -15,6 +16,15 @@ class UtilsTest(unittest.TestCase):
         assert_that(
             get_username(),
             equal_to('SomeUser')
+        )
+
+    @patch('mac_os_scripts.utils.os.environ')
+    def test_get_hostname(self, environ):
+        environ.get.return_value = 'SomeHostname'
+
+        assert_that(
+            get_hostname(),
+            equal_to('SomeHostname')
         )
 
     @patch('mac_os_scripts.utils.get_username')
