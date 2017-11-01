@@ -27,14 +27,18 @@ in before you mix the script into your image building system.
 
 ### How do I work on it?
 
-#### Prerequisites (assuming you're on a Mac):
+#####  Prerequisites (assuming you're on a Mac):
 
-* pip (brew install pip)
-* virtualenvwrapper (pip install virtualenvwrapper)
+* pip (<code>brew install pip</code>)
+* virtualenvwrapper (<code>pip install virtualenvwrapper</code>)
 
 ##### Create the Python virtualenv
 
-<code>mkvirtualenv virtualenvwrapper</code> 
+<code>mkvirtualenv mac_os_scripts</code>
+
+#### Activate the Python virtualenv
+
+<code>workon mac_os_scripts</code>
 
 ##### Install the requirements
 
@@ -45,3 +49,11 @@ in before you mix the script into your image building system.
 <code>py.test -v</code>
 
 ##### Make your changes
+
+Code-wise, the things to be aware of are:
+
+* utils.py contains the base utils to interact with the system (run commands, read and write files etc)
+    * also contain some helper functions to assist with argument parsing
+* common.py contains the base CLITieIn object that implements some of those commands along with a logger
+
+Look at any of the scripts to get an idea of how to use the argument parser and the CLITieIn and how to test stuff
