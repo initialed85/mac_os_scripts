@@ -4,13 +4,7 @@ from hamcrest import assert_that, equal_to
 from mock import MagicMock, call
 
 from mac_os_scripts.enable_restricted_ssh import RestrictedSSHEnabler
-from mac_os_scripts.utils import RunCommandOutput
-
-_NO_OUTPUT = RunCommandOutput(
-    stdout='',
-    stderr='',
-    error_level=0,
-)
+from mac_os_scripts_tests.test_common import _NO_OUTPUT
 
 _ETC_PF_CONF_BEFORE = """#
 # Default PF configuration file.

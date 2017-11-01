@@ -4,13 +4,7 @@ from hamcrest import assert_that, equal_to
 from mock import MagicMock, call
 
 from mac_os_scripts.change_background import BackgroundChanger
-from mac_os_scripts.utils import RunCommandOutput
-
-_NO_OUTPUT = RunCommandOutput(
-    stdout='',
-    stderr='',
-    error_level=0,
-)
+from mac_os_scripts_tests.test_common import _NO_OUTPUT
 
 
 class HandoffDisablerTest(unittest.TestCase):

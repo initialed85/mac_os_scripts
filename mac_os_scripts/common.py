@@ -1,4 +1,4 @@
-from utils import get_logger, run_command, read_file, write_file
+from utils import get_username, get_logger, run_command, read_file, write_file
 
 
 class CLITieIn(object):
@@ -7,6 +7,9 @@ class CLITieIn(object):
         self._sudo_password = sudo_password
 
         self._logger.debug('created')
+
+    def get_username(self):
+        return get_username()
 
     def run_command(self, command_line, quiet=True, sudo_password_override=None):
         sudo_password = self._sudo_password

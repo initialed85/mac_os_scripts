@@ -4,7 +4,7 @@ from hamcrest import assert_that, equal_to
 from mock import MagicMock, call
 
 from mac_os_scripts.configure_ntp import NTPConfigurator
-from mac_os_scripts_tests.change_background_test import _NO_OUTPUT
+from mac_os_scripts_tests.test_common import _NO_OUTPUT
 
 
 class SecurityLoggingEnablerTest(unittest.TestCase):

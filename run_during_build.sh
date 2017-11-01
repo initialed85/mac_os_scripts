@@ -35,3 +35,6 @@ python -m mac_os_scripts.enable_restricted_ssh -x $SUDO_PASSWORD -a $SSH_ALLOWED
 
 # enable ntp and set ntp server
 python -m mac_os_scripts.configure_ntp -x $SUDO_PASSWORD -s $NTP_SERVER
+
+# set the user logo for the build user
+python -m mac_os_scripts.set_user_account_logo -x $SUDO_PASSWORD -l /usr/local/zetta/user_logo.tiff

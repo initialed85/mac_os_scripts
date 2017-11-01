@@ -55,7 +55,9 @@ class BackgroundChanger(CLITieIn):
 
     def run(self, background_path):
         if not self.change_background(background_path):
-            self._logger.error('failed change_background; cannot continue')
+            self._logger.error('failed change_background with background_path={0}; cannot continue'.format(
+                background_path
+            ))
             return False
 
         self._logger.debug('passed')

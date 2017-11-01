@@ -4,13 +4,6 @@ from hamcrest import assert_that, equal_to
 from mock import MagicMock, call
 
 from mac_os_scripts.configure_auditing_flags import AuditingFlagsConfigurator
-from mac_os_scripts.utils import RunCommandOutput
-
-_NO_OUTPUT = RunCommandOutput(
-    stdout='',
-    stderr='',
-    error_level=0,
-)
 
 _ETC_SECURITY_AUDIT_CONTROL_BEFORE = """#
 # $P4: //depot/projects/trustedbsd/openbsm/etc/audit_control#8 $

@@ -9,6 +9,14 @@ import traceback
 RunCommandOutput = collections.namedtuple('RunCommandOutput', ['stdout', 'stderr', 'error_level'])
 
 
+def get_username():
+    username = os.environ.get('USER', False)
+    if username is False:
+        raise KeyError('failed to get username from $USER')
+
+    return username
+
+
 def get_logger(name, max_bytes=16384, backup_count=2, also_stdout=True):
     """
     this function gets (or creates) a logger for the requested name
@@ -26,10 +34,7 @@ def get_logger(name, max_bytes=16384, backup_count=2, also_stdout=True):
 
         logger.setLevel(logging.DEBUG)
 
-        try:
-            username = os.environ.get('USER')
-        except:
-            username = None
+        username = get_username()
 
         handler = logging.handlers.RotatingFileHandler(
             '/tmp/mac_os_scripts_{0}{1}.log'.format(
