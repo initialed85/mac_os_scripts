@@ -12,6 +12,8 @@ class CLITieInTest(unittest.TestCase):
 
     @patch('mac_os_scripts.common.run_command')
     def test_run_command_normal(self, run_command):
+        run_command.return_value = 'some output\n'
+
         self._subject.run_command('some command')
 
         assert_that(
@@ -23,6 +25,8 @@ class CLITieInTest(unittest.TestCase):
 
     @patch('mac_os_scripts.common.run_command')
     def test_run_command_global_sudo(self, run_command):
+        run_command.return_value = 'some output\n'
+
         self._subject._sudo_password = 'SomePassword'
 
         self._subject.run_command('some command')
@@ -36,6 +40,8 @@ class CLITieInTest(unittest.TestCase):
 
     @patch('mac_os_scripts.common.run_command')
     def test_run_command_override_sudo_different_password(self, run_command):
+        run_command.return_value = 'some output\n'
+
         self._subject._sudo_password = 'SomePassword'
 
         self._subject.run_command('some command', sudo_password_override='OtherPassword')
@@ -49,6 +55,8 @@ class CLITieInTest(unittest.TestCase):
 
     @patch('mac_os_scripts.common.run_command')
     def test_run_command_override_sudo_no_password(self, run_command):
+        run_command.return_value = 'some output\n'
+
         self._subject._sudo_password = 'SomePassword'
 
         self._subject.run_command('some command', sudo_password_override=False)
@@ -62,6 +70,8 @@ class CLITieInTest(unittest.TestCase):
 
     @patch('mac_os_scripts.common.read_file')
     def test_read_file(self, read_file):
+        read_file.return_value = 'some data'
+
         self._subject.read_file('/some/path')
 
         assert_that(

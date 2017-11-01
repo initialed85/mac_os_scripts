@@ -12,6 +12,9 @@
 # the build user has)
 # WARNING: this password needs to be correctly escaped- e.g. "Password\ 123\!\@\#" (without the quotes)
 SUDO_PASSWORD=Password1
+
+# this is the root password to set before disabling the root user
+# WARNING: this password needs to be correctly escaped- e.g. "Password\ 123\!\@\#" (without the quotes)
 ROOT_PASSWORD=P\@\$\$w0rd123\!\@\#
 
 # this is a comma-separated list of IPs allowed to SSH into machines
@@ -41,5 +44,8 @@ python -m mac_os_scripts.configure_ntp -x $SUDO_PASSWORD -s $NTP_SERVER
 # set the user logo for the build user
 python -m mac_os_scripts.set_user_account_logo -x $SUDO_PASSWORD -l /usr/local/zetta/user_logo.tiff
 
-# set the root user password and then disable the root user
+# set the root password and then disable the root user
 python -m mac_os_scripts.configure_root_user -x $SUDO_PASSWORD -r $ROOT_PASSWORD
+
+# disable core dumps
+python -m mac_os_scripts.disable_core_dump -x $SUDO_PASSWORD

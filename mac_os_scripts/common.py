@@ -23,18 +23,20 @@ class CLITieIn(object):
         if sudo_password is not None:
             command_line = 'echo "{0}" | sudo -S {1}'.format(sudo_password, command_line)
 
-        log_prefix = 'run_command(command_line={0}, quiet={1})'.format(
-            repr(command_line), quiet
-        )
+        self._logger.debug('run_command invoked; quiet={0}, sudo_password_override={1}'.format(
+            quiet, sudo_password
+        ))
 
-        self._logger.debug('{0} invoking'.format(log_prefix))
+        self._logger.debug('calling:\n{0}\n'.format(
+            command_line.rstrip()
+        ))
 
         command_output = run_command(
             command_line=command_line,
             quiet=quiet
         )
-        self._logger.debug('{0} returned {1}'.format(
-            log_prefix, command_output
+        self._logger.debug('returned:\n{0}\n'.format(
+            command_output.rstrip()
         ))
 
         return command_output
@@ -58,11 +60,11 @@ class CLITieIn(object):
     def read_file(self, path):
         self._logger.debug('reading file from {0}'.format(repr(path)))
         data = read_file(path)
-        self._logger.debug('read {0} bytes'.format(len(data)))
+        self._logger.debug('read:\n{0}\n'.format(data.rstrip()))
         return data
 
     def write_file(self, path, data):
         self._logger.debug('writing file to {0}'.format(repr(path)))
         result = write_file(path, data)
-        self._logger.debug('wrote {0} bytes'.format(len(data)))
+        self._logger.debug('wrote:\n{0}\n'.format(data.rstrip()))
         return result

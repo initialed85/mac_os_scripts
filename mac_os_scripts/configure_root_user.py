@@ -1,6 +1,6 @@
 """
 
-This script is responsible for setting the root user password and then disabling the root user
+This script is responsible for setting the root password and then disabling the root user
 
 Commands used:
 
