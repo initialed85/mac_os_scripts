@@ -18,15 +18,6 @@ def get_username():
 
 
 def get_logger(name, max_bytes=16384, backup_count=2, also_stdout=True):
-    """
-    this function gets (or creates) a logger for the requested name
-
-    :param name: name of logger to create or get (if it already exists)
-    :param max_bytes: size a log file can get to before it rotates
-    :param backup_count: number of rotations of a file before deletion (e.g. x.log, x.log.1, x.log.2)
-    :return: logger object
-    """
-
     logger = logging.getLogger(name)
     existed = True
     if not logger.handlers:

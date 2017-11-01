@@ -2,19 +2,19 @@
 
 # this file is applicable for all users (hence run at build time)
 
-# prerequisites
-#
-# have copied the inner mac_os_scripts folder to /usr/local/zetta as well as the
-# two bash scripts
+# you'll need to have copied the inner mac_os_scripts folder to /usr/local/zetta as well
+# as the two bash scripts
 
-# this is the password of the admin user in the sudo group (localuser currently)
-# it's not yet proven that this mightn't be needed at all (depending on which privileges
-# the build user has)
-# WARNING: this password needs to be correctly escaped- e.g. "Password\ 123\!\@\#" (without the quotes)
+# this is the password of the admin user in the sudo group (localuser currently) it's not
+# yet proven that this mightn't be needed at all (depending on which privileges the build
+# user has)
+# WARNING: this password needs to be correctly escaped- e.g. "Password\ 123\!\@\#" (without
+# the quotes)
 SUDO_PASSWORD=Password1
 
 # this is the root password to set before disabling the root user
-# WARNING: this password needs to be correctly escaped- e.g. "Password\ 123\!\@\#" (without the quotes)
+# WARNING: this password needs to be correctly escaped- e.g. "Password\ 123\!\@\#" (without
+# the quotes)
 ROOT_PASSWORD=P\@\$\$w0rd123\!\@\#
 
 # this is a comma-separated list of IPs allowed to SSH into machines

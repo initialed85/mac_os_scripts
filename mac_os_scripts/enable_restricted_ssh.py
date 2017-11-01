@@ -6,15 +6,15 @@ Commands used:
 
 - systemsetup -setremotelogin on
 - (in /etc/pf.conf)
-    - pass in quick on en0 inet proto tcp from (host) to any port 22
-    - block drop in quick on en0 inet proto tcp from any to any port 22
+    - pass in quick inet proto tcp from (host) to any port 22
+    - block drop in quick inet proto tcp from any to any port 22
 - pfctl -d
 - pfctl -F all
 - pfctl -f /etc/pf.conf -e
 
-"""
+sudo pfctl -d; sudo pfctl -F all; sudo pfctl -f /etc/pf.conf -e
 
-# TODO: change firewall lines to block on all interfaces, not just en0
+"""
 
 from common import CLITieIn
 
@@ -45,14 +45,14 @@ class RestrictedSSHEnabler(CLITieIn):
             )
 
             for host in [x.strip() for x in allowed_hosts.split(',')]:
-                data += 'pass in quick on en0 inet proto tcp from {0} to any port 22\n'.format(
+                data += 'pass in quick inet proto tcp from {0} to any port 22\n'.format(
                     host
                 )
 
             data += (
                 '\n'
                 '# drop SSH for all other hosts\n'
-                'block drop in quick on en0 inet proto tcp from any to any port 22\n'
+                'block drop in quick inet proto tcp from any to any port 22\n'
             )
 
             data = data.replace('\r', '')
