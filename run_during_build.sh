@@ -49,3 +49,6 @@ python -m mac_os_scripts.configure_root_user -x $SUDO_PASSWORD -r $ROOT_PASSWORD
 
 # disable core dumps
 python -m mac_os_scripts.disable_core_dump -x $SUDO_PASSWORD
+
+# enable restricted IBSS (ad-hoc/computer-to-computer wireless networking)
+python -m mac_os_scripts.enable_restricted_ibss -x $SUDO_PASSWORD
