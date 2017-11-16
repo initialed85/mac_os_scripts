@@ -4,7 +4,7 @@ This script is responsible for changing the desktop background.
 
 Commands used:
 
--  /usr/bin/osascript /usr/local/zetta/mac_os_scripts/shell_scripts/change_background.scpt (path)
+-  /usr/bin/osascript /usr/local/zetta/mac_os_scripts/external/change_background.scpt (path)
 
 Scripts referenced:
 
@@ -38,7 +38,7 @@ from common import CLITieIn
 
 class BackgroundChanger(CLITieIn):
     def change_background(self, background_path):
-        command = '/usr/bin/osascript /usr/local/zetta/mac_os_scripts/shell_scripts/change_background.scpt {0}'.format(
+        command = '/usr/bin/osascript /usr/local/zetta/mac_os_scripts/external/change_background.scpt {0}'.format(
             background_path
         )
         command_output = self.command(command)

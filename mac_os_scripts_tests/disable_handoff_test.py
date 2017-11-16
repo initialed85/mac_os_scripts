@@ -25,7 +25,7 @@ class HandoffDisablerTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='/usr/local/zetta/mac_os_scripts/shell_scripts/disable_handoff.sh', quiet=True,
+                call(command_line='/usr/local/zetta/mac_os_scripts/external/disable_handoff.sh', quiet=True,
                      sudo_password_override=False)
             ])
         )

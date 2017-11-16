@@ -26,7 +26,7 @@ class HandoffDisablerTest(unittest.TestCase):
             self._subject.run_command.mock_calls,
             equal_to([
                 call(
-                    command_line='/usr/bin/osascript /usr/local/zetta/mac_os_scripts/shell_scripts/change_background.scpt /usr/local/zetta/background.jpg',
+                    command_line='/usr/bin/osascript /usr/local/zetta/mac_os_scripts/external/change_background.scpt /usr/local/zetta/background.jpg',
                     quiet=True,
                     sudo_password_override=False
                 )

@@ -4,7 +4,7 @@ This script is responsible for disabling Handoff
 
 Commands used:
 
--  /usr/local/zetta/mac_os_scripts/shell_scripts/disable_handoff.sh
+-  /usr/local/zetta/mac_os_scripts/external/disable_handoff.sh
 
 Scripts referenced:
 
@@ -37,7 +37,7 @@ from common import CLITieIn
 
 class HandoffDisabler(CLITieIn):
     def disable_handoff(self):
-        command = '/usr/local/zetta/mac_os_scripts/shell_scripts/disable_handoff.sh'
+        command = '/usr/local/zetta/mac_os_scripts/external/disable_handoff.sh'
         command_output = self.command(command)
 
         if command_output.error_level != 0:

@@ -57,3 +57,17 @@ Code-wise, the things to be aware of are:
 * common.py contains the base CLITieIn object that implements some of those commands along with a logger
 
 Look at any of the scripts to get an idea of how to use the argument parser and the CLITieIn and how to test stuff
+
+##### Credits
+
+* Credits to [Cody Krieger](https://github.com/codykrieger/) for 
+[gfxCardStatus](https://github.com/codykrieger/gfxCardStatus)
+* Credits to [qxnor](https://github.com/qnxor/) for [macoh](https://github.com/qnxor/macoh) which contains
+  a build of [gfxCardStatus](https://github.com/qnxor/macoh/blob/master/gfxCardStatus.tgz) that allows
+  commandline arguments to be specified 
+
+
+##### License
+
+The scripts I have written are licensed under under the MIT license (see LICENSE.txt); gfxCardStatus is licensed under
+the New BSD license (see LICENSE_gfxCardStatus.txt)
