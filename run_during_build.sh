@@ -8,12 +8,12 @@
 # this is the password of the admin user in the sudo group (localuser currently) it's not
 # yet proven that this mightn't be needed at all (depending on which privileges the build
 # user has)
-# WARNING: this password needs to be correctly escaped- e.g. "Password\ 123\!\@\#" (without
+# WARNING: this password needs to be correctly escaped- e.g. "Password 123!@#" = "Password\ 123\!\@\#" (without
 # the quotes)
 SUDO_PASSWORD=Password1
 
 # this is the root password to set before disabling the root user
-# WARNING: this password needs to be correctly escaped- e.g. "Password\ 123\!\@\#" (without
+# WARNING: this password needs to be correctly escaped- e.g. "Password 123!@#" = "Password\ 123\!\@\#" (without
 # the quotes)
 ROOT_PASSWORD=P\@\$\$w0rd123\!\@\#
 
@@ -22,6 +22,11 @@ SSH_ALLOWED_HOSTS=192.168.1.1,192.168.1.2
 
 # this is the ntp server to configure
 NTP_SERVER=time1.google.com
+
+# this is the firmware password
+# WARNING: this password needs to be correctly escaped- e.g. "Password 123!@#" = "Password\ 123\!\@\#" (without
+# the quotes)
+FIRMWARE_PASSWORD=P\@\$\$w0rd123\!\@\#
 
 # need to run scripts from here because of Python path requirements
 cd /usr/local/zetta/
@@ -60,3 +65,6 @@ python -m mac_os_scripts.register_computer_account -g ComputerGroup -o Users.Dev
 
 # disable guest connection to shared folders
 python -m mac_os_scripts.disable_guest_connection_to_shared_folders -x $SUDO_PASSWORD
+
+# set firmware password
+python -m mac_os_scripts.set_firmware_password -x $SUDO_PASSWORD -f $FIRMWARE_PASSWORD

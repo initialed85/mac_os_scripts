@@ -36,7 +36,7 @@ end run
 from common import CLITieIn
 
 
-class BackgroundChanger(CLITieIn):
+class BackgroundSetter(CLITieIn):
     def change_background(self, background_path):
         command = '/usr/bin/osascript /usr/local/zetta/mac_os_scripts/external/change_background.scpt {0}'.format(
             background_path
@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
     args = get_args(parser)
 
-    actor = BackgroundChanger(
+    actor = BackgroundSetter(
         sudo_password=args.sudo_password,
     )
 

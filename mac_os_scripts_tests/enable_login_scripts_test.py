@@ -28,7 +28,7 @@ class LoginScriptEnablerTest(unittest.TestCase):
             equal_to([
                 call(
                     command_line='defaults write /var/root/Library/Preferences/com.apple.loginwindow EnableMCXLoginScripts TRUE',
-                    quiet=True, sudo_password_override=None)
+                    quiet=True, sudo_password_override=None, timeout=None, send_lines=None)
             ])
         )
 
@@ -47,7 +47,7 @@ class LoginScriptEnablerTest(unittest.TestCase):
             equal_to([
                 call(
                     command_line='defaults write var/root/Library/Preferences/com.apple.loginwindow MCXScriptTrust -string FullTrust',
-                    quiet=True, sudo_password_override=None)
+                    quiet=True, sudo_password_override=None, timeout=None, send_lines=None)
             ])
         )
 

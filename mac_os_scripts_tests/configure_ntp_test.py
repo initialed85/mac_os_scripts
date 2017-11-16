@@ -7,7 +7,7 @@ from mac_os_scripts.configure_ntp import NTPConfigurator
 from mac_os_scripts_tests.test_common import _NO_OUTPUT
 
 
-class SecurityLoggingEnablerTest(unittest.TestCase):
+class NTPConfiguratorTest(unittest.TestCase):
     def setUp(self):
         self._subject = NTPConfigurator(
             sudo_password='SomePassword',
@@ -25,7 +25,7 @@ class SecurityLoggingEnablerTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='systemsetup -setusingnetworktime on', quiet=True, sudo_password_override=None)
+                call(command_line='systemsetup -setusingnetworktime on', quiet=True, sudo_password_override=None, timeout=None, send_lines=None)
             ])
         )
 
@@ -43,7 +43,7 @@ class SecurityLoggingEnablerTest(unittest.TestCase):
             self._subject.run_command.mock_calls,
             equal_to([
                 call(command_line='systemsetup -setnetworktimeserver time1.google.com', quiet=True,
-                     sudo_password_override=None)
+                     sudo_password_override=None, timeout=None, send_lines=None)
             ])
         )
 

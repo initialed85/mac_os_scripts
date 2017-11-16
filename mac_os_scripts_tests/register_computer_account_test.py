@@ -61,7 +61,7 @@ class ComputerAccountRegistererTest(unittest.TestCase):
             equal_to([
                 call(
                     command_line='ldapmodify -H ldap://some.domain.com -f /tmp/register.ldif -D some.admin -w P\\@\\$\\$w0rd123\\!\\@\\# -x -c -v',
-                    quiet=True, sudo_password_override=None
+                    quiet=True, sudo_password_override=None, timeout=None, send_lines=None
                 )
             ])
         )

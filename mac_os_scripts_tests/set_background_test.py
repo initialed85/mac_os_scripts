@@ -3,13 +3,13 @@ import unittest
 from hamcrest import assert_that, equal_to
 from mock import MagicMock, call
 
-from mac_os_scripts.set_background import BackgroundChanger
+from mac_os_scripts.set_background import BackgroundSetter
 from mac_os_scripts_tests.test_common import _NO_OUTPUT
 
 
-class HandoffDisablerTest(unittest.TestCase):
+class BackgroundSetterTest(unittest.TestCase):
     def setUp(self):
-        self._subject = BackgroundChanger(
+        self._subject = BackgroundSetter(
             sudo_password=None,
         )
         self._subject.run_command = MagicMock()
@@ -27,8 +27,7 @@ class HandoffDisablerTest(unittest.TestCase):
             equal_to([
                 call(
                     command_line='/usr/bin/osascript /usr/local/zetta/mac_os_scripts/external/change_background.scpt /usr/local/zetta/background.jpg',
-                    quiet=True,
-                    sudo_password_override=False
+                    quiet=True, sudo_password_override=False, timeout=None, send_lines=None
                 )
             ])
         )

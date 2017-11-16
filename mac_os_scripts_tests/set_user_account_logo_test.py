@@ -7,7 +7,7 @@ from mac_os_scripts.set_user_account_logo import LocalUserAccountLogoSetter
 from mac_os_scripts_tests.test_common import _NO_OUTPUT
 
 
-class SecurityLoggingEnablerTest(unittest.TestCase):
+class LocalUserAccountLogoSetterTest(unittest.TestCase):
     def setUp(self):
         self._subject = LocalUserAccountLogoSetter(
             sudo_password='SomePassword',
@@ -27,7 +27,7 @@ class SecurityLoggingEnablerTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='dscl . delete /Users/SomeUser Picture', quiet=True, sudo_password_override=False)
+                call(command_line='dscl . delete /Users/SomeUser Picture', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
 
@@ -44,8 +44,8 @@ class SecurityLoggingEnablerTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='dscl . create /Users/SomeUser Picture "/path/to/some/logo.tif"', quiet=True,
-                     sudo_password_override=None)
+                call(command_line='dscl . create /Users/SomeUser Picture "/path/to/some/logo.tif"', quiet=True, sudo_password_override=None,
+                     timeout=None, send_lines=None)
             ])
         )
 

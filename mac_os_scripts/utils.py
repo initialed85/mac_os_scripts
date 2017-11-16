@@ -1,9 +1,11 @@
 import argparse
 import collections
+import datetime
 import logging
 import logging.handlers
 import os
 import subprocess
+import time
 import traceback
 
 RunCommandOutput = collections.namedtuple('RunCommandOutput', ['stdout', 'stderr', 'error_level'])
@@ -15,14 +17,6 @@ def get_username():
         raise KeyError('failed to get username from $USER')
 
     return username
-
-
-def get_hostname():
-    hostname = os.environ.get('HOSTNAME', False)
-    if hostname is False:
-        raise KeyError('failed to get hostname from $HOSTNAME')
-
-    return hostname
 
 
 def get_logger(name, max_bytes=16384, backup_count=2, also_stdout=True):
@@ -74,15 +68,41 @@ def get_logger(name, max_bytes=16384, backup_count=2, also_stdout=True):
 logger = get_logger('utils')
 
 
-def run_command(command_line, quiet=True):
-    """
-    this function tries to execute the specified command line
+def get_hostname():
+    hostname = os.environ.get('HOSTNAME', False)
+    if hostname is False:
+        logger.error('failed to get hostname from $HOSTNAME')
+        raise KeyError('failed to get hostname from $HOSTNAME')
 
-    :param command_line: command line to execute
-    :param quiet: default True; fail quietly (no Exceptions)
-    :return: RunCommandOutput object (.stdout, .stderr, .error_level)
-    """
+    return hostname
 
+
+def _spawn_subprocess(command_line, shell=True):
+    return subprocess.Popen(
+        command_line,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        stdin=subprocess.PIPE,
+        shell=shell,
+        bufsize=1,
+    )
+
+
+def _wait_for_terminate(p, timeout=None):
+    started = datetime.datetime.now()
+    while p.poll() is None:
+        if timeout is not None and datetime.datetime.now() - started > datetime.timedelta(seconds=timeout):
+            return False
+        time.sleep(0.1)
+
+    return True
+
+
+def _force_terminate(p):
+    p.kill()
+
+
+def run_command(command_line, quiet=True, timeout=None, send_lines=None):
     def log(function, message):
         function('run_command(command_line={0}) {1}'.format(
             repr(command_line), message
@@ -99,20 +119,32 @@ def run_command(command_line, quiet=True):
     log(logger.debug, 'called')
 
     try:
-        p = subprocess.Popen(
-            command_line,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            shell=True,
-        )
-        log(logger.debug, 'invoked Popen() successfully')
+        p = _spawn_subprocess(command_line)
+        log(logger.debug, 'invoked _spawn_subprocess successfully')
     except Exception as e:
-        log(logger.error, 'invoked Popen() unsuccessfully; exception follows:\n{0}\n'.format(
+        log(logger.error, 'invoked _spawn_subprocess unsuccessfully; exception follows:\n{0}\n'.format(
             traceback.format_exc().strip()
         ))
         if not quiet:
             raise e
         return quiet_fail_run_command_output
+
+    if send_lines is not None:
+        for line in send_lines:
+            p.stdin.write('{0}\r'.format(line.rstrip()))
+            p.stdin.flush()
+
+    if not _wait_for_terminate(p, timeout):
+        _force_terminate(p)
+        log(logger.error, 'invoked _wait_for_terminate unsuccessfully; force terminate after {0} seconds'.format(
+            timeout
+        ))
+        if not quiet:
+            raise Exception('invoked _wait_for_terminate unsuccessfully; force terminate after {0} seconds'.format(
+                timeout
+            ))
+    else:
+        log(logger.info, 'invoked _wait_for_terminate successfully')
 
     try:
         stdout, stderr = [x.strip() for x in p.communicate()]
