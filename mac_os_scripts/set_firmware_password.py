@@ -4,10 +4,23 @@ This script is responsible for setting the firmware password
 
 Commands used:
 
-- firmwarepasswd -setpasswd -setmode command
-    - (password)
-    - (password)
+- expect -d -f /usr/local/zetta/mac_os_scripts/external/set_firmware_password_expect
+set password [lindex $argv 0];
 
+spawn firmwarepasswd -setpasswd -setmode command
+
+expect {
+
+        "Enter new password:" {
+                send "$password\r"
+                exp_continue
+        }
+
+        "Re-enter new password:" {
+                send "$password\r"
+                exp_continue
+        }
+}
 """
 
 from common import CLITieIn

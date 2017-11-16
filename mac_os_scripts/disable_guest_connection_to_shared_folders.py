@@ -1,10 +1,10 @@
 """
 
-This script is responsible for enabling reduced transparency
+This script is responsible for disabling guest connection to shared folders
 
 Commands used:
 
-- defaults write com.apple.universalaccess reduceTransparency -bool true
+- defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess false
 
 """
 

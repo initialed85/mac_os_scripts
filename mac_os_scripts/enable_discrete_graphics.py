@@ -1,6 +1,6 @@
 """
 
-This script is responsible for disabling core dumps
+This script is responsible for enabling discrete graphics (GPU)
 
 Commands used:
 
