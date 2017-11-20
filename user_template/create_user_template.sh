@@ -52,7 +52,7 @@ rm -fr com.apple.dock.plist-before
 rm -fr com.apple.dock.plist-after
 echo ""
 
-echo "info: fixing premissions on the new template"
+echo "info: fixing permissions on the new template"
 chown -fR root:wheel "$TARGET_USER_TEMPLATE"
 chmod -fR 755 "$TARGET_USER_TEMPLATE"
 echo ""
