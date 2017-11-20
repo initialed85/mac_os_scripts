@@ -13,9 +13,9 @@ from common import CLITieIn
 
 
 class LocalUserAccountLogoSetter(CLITieIn):
-    def delete_user_account_logo(self):
+    def delete_user_account_logo(self, username):
         command = 'dscl . delete /Users/{0} Picture'.format(
-            self.get_username()
+            username
         )
         command_output = self.command(command)
 
@@ -29,11 +29,11 @@ class LocalUserAccountLogoSetter(CLITieIn):
 
         return True
 
-    def create_user_account_logo(self, logo_path):
+    def create_user_account_logo(self, username, logo_path):
         command = 'dscl . create /Users/{0} Picture "{1}"'.format(
-            self.get_username(), logo_path
+            username, logo_path
         )
-        command_output = self.sudo_command(command)
+        command_output = self.command(command)
 
         if command_output.error_level != 0:
             self._logger.error(
@@ -45,15 +45,19 @@ class LocalUserAccountLogoSetter(CLITieIn):
 
         return True
 
-    def run(self, logo_path):
-        if not self.delete_user_account_logo():
-            self._logger.error('failed delete_user_account_logo ; cannot continue')
+    def run(self, username, logo_path):
+        if not self.delete_user_account_logo(username):
+            self._logger.error('failed delete_user_account_logo with username={0}; cannot continue'.format(
+                username
+            ))
             return False
 
-        if not self.create_user_account_logo(logo_path):
-            self._logger.error('failed create_user_account_logo with logo_path={0}; cannot continue'.format(
-                logo_path
-            ))
+        if not self.create_user_account_logo(username, logo_path):
+            self._logger.error(
+                'failed create_user_account_logo with username={0}, logo_path={1}; cannot continue'.format(
+                    username, logo_path
+                )
+            )
             return False
 
         self._logger.debug('passed')
@@ -64,6 +68,14 @@ if __name__ == '__main__':
     from utils import get_argparser, get_args
 
     parser = get_argparser()
+
+    parser.add_argument(
+        '-u',
+        '--username',
+        type=str,
+        required=True,
+        help='user to set logo for'
+    )
 
     parser.add_argument(
         '-l',
@@ -80,5 +92,6 @@ if __name__ == '__main__':
     )
 
     actor.run(
+        username=args.username,
         logo_path=args.logo_path
     )

@@ -13,21 +13,22 @@ class LocalUserAccountLogoSetterTest(unittest.TestCase):
             sudo_password='SomePassword',
         )
         self._subject.run_command = MagicMock()
-        self._subject.get_username = MagicMock()
-        self._subject.get_username.return_value = 'SomeUser'
 
     def test_delete_user_account_logo(self):
         self._subject.run_command.return_value = _NO_OUTPUT
 
         assert_that(
-            self._subject.delete_user_account_logo(),
+            self._subject.delete_user_account_logo(
+                username='SomeUser',
+            ),
             equal_to(True)
         )
 
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='dscl . delete /Users/SomeUser Picture', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
+                call(command_line='dscl . delete /Users/SomeUser Picture', quiet=True, sudo_password_override=False, timeout=None,
+                     send_lines=None)
             ])
         )
 
@@ -36,6 +37,7 @@ class LocalUserAccountLogoSetterTest(unittest.TestCase):
 
         assert_that(
             self._subject.create_user_account_logo(
+                username='SomeUser',
                 logo_path='/path/to/some/logo.tif',
             ),
             equal_to(True)
@@ -44,8 +46,8 @@ class LocalUserAccountLogoSetterTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='dscl . create /Users/SomeUser Picture "/path/to/some/logo.tif"', quiet=True, sudo_password_override=None,
-                     timeout=None, send_lines=None)
+                call(command_line='dscl . create /Users/SomeUser Picture "/path/to/some/logo.tif"', quiet=True,
+                     sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
 
@@ -57,6 +59,7 @@ class LocalUserAccountLogoSetterTest(unittest.TestCase):
 
         assert_that(
             self._subject.run(
+                username='SomeUser',
                 logo_path='/path/to/some/logo.tif'
             ),
             equal_to(True)

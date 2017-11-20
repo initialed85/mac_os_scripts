@@ -14,7 +14,7 @@ from common import CLITieIn
 
 class AirDropDisabler(CLITieIn):
     def disable_airdrop(self):
-        command = 'defaults write com.apple.NetworkBrowser DisableAirDrop -bool NO'
+        command = 'defaults write com.apple.NetworkBrowser DisableAirDrop -bool YES'
         command_output = self.command(command)
 
         if command_output.error_level != 0:

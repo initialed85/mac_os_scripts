@@ -3,19 +3,19 @@ import unittest
 from hamcrest import assert_that, equal_to
 from mock import MagicMock, call
 
-from mac_os_scripts.register_computer_account import ComputerAccountRegisterer
+from mac_os_scripts.add_computer_to_group import ComputerToGroupAdder
 from mac_os_scripts_tests.test_common import _NO_OUTPUT
 
-_TMP_REGISTER_LDIF = """dn: CN=computer_group,OU=group1,OU=group2,DC=some,DC=domain,DC=com
+_TMP_REGISTER_LDIF = """dn: CN=some_hostname,OU=macOS,OU=Computers,OU=Some Place,DC=some,DC=domain,DC=com
 changetype: modify
 add: member
-member: CN=computer_name,OU=group1,OU=group2,DC=some,DC=domain,DC=com
+member: CN=Developers,OU=Users,OU=Groups,OU=Some Place,DC=some,DC=domain,DC=com
 """
 
 
-class ComputerAccountRegistererTest(unittest.TestCase):
+class ComputerToGroupAdderTest(unittest.TestCase):
     def setUp(self):
-        self._subject = ComputerAccountRegisterer(
+        self._subject = ComputerToGroupAdder(
             sudo_password='Password1',
         )
         self._subject.run_command = MagicMock()
@@ -28,10 +28,8 @@ class ComputerAccountRegistererTest(unittest.TestCase):
 
         assert_that(
             self._subject.build_register_ldif(
-                computer_group='computer_group',
-                ou_path='group1.group2',
-                dc_path='some.domain.com',
-                computer_name='computer_name',
+                source_ou_path='CN=some_hostname,OU=macOS,OU=Computers,OU=Some Place,DC=some,DC=domain,DC=com',
+                destination_ou_path='CN=Developers,OU=Users,OU=Groups,OU=Some Place,DC=some,DC=domain,DC=com',
             ),
             equal_to(True)
         )
@@ -43,13 +41,13 @@ class ComputerAccountRegistererTest(unittest.TestCase):
             ])
         )
 
-    def test_register_computer_account(self):
+    def test_add_computer_to_group(self):
         self._subject.run_command.return_value = _NO_OUTPUT
         self._subject.get_hostname.return_value = 'SomeHostname'
 
         assert_that(
-            self._subject.register_computer_account(
-                dc_path='some.domain.com',
+            self._subject.add_computer_to_group(
+                fqdn='some.domain.com',
                 domain_username='some.admin',
                 domain_password='P\@\$\$w0rd123\!\@\#'
             ),
@@ -69,15 +67,14 @@ class ComputerAccountRegistererTest(unittest.TestCase):
     def test_run_pass(self):
         self._subject.build_register_ldif = MagicMock()
         self._subject.build_register_ldif.return_value = True
-        self._subject.register_computer_account = MagicMock()
-        self._subject.register_computer_account.return_value = True
+        self._subject.add_computer_to_group = MagicMock()
+        self._subject.add_computer_to_group.return_value = True
 
         assert_that(
             self._subject.run(
-                computer_group='computer_group',
-                ou_path='group1.group2',
-                dc_path='some.domain.com',
-                computer_name='SomeHostname',
+                source_ou_path='CN=some_hostname,OU=macOS,OU=Computers,OU=Some Place,DC=some,DC=domain,DC=com',
+                destination_ou_path='CN=Developers,OU=Users,OU=Groups,OU=Some Place,DC=some,DC=domain,DC=com',
+                fqdn='some.domain.com',
                 domain_username='some.admin',
                 domain_password='P\@\$\$w0rd123\!\@\#'
             ),

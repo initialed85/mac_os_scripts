@@ -50,7 +50,7 @@ class UserDriveMapperTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='ping -c 4 -W 1000 -t 5 8.8.8.8"', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
+                call(command_line='ping -c 4 -W 1000 -t 5 8.8.8.8', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
 
@@ -65,7 +65,7 @@ class UserDriveMapperTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='ping -c 4 -W 1000 -t 5 6.6.6.6"', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
+                call(command_line='ping -c 4 -W 1000 -t 5 6.6.6.6', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
 

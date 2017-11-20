@@ -28,7 +28,7 @@ class RootUserConfiguratorTest(unittest.TestCase):
             self._subject.run_command.mock_calls,
             equal_to([
                 call(command_line='dscl . -passwd /Users/root P\\@\\$\\$w0rd123\\!\\@\\#', quiet=True,
-                     sudo_password_override=None, timeout=None, send_lines=None)
+                     sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
 
@@ -36,14 +36,19 @@ class RootUserConfiguratorTest(unittest.TestCase):
         self._subject.run_command.return_value = _NO_OUTPUT
 
         assert_that(
-            self._subject.disable_root_user(),
+            self._subject.disable_root_user(
+                admin_username='admin_username',
+                admin_password='admin_password',
+                root_password='P\@\$\$w0rd123\!\@\#',
+            ),
             equal_to(True)
         )
 
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='dsenableroot -d', quiet=True, sudo_password_override=None, timeout=None, send_lines=None)
+                call(command_line='dsenableroot -d -u admin_username -p admin_password -r P\\@\\$\\$w0rd123\\!\\@\\#', quiet=True,
+                     send_lines=None, sudo_password_override=False, timeout=None)
             ])
         )
 
@@ -55,6 +60,8 @@ class RootUserConfiguratorTest(unittest.TestCase):
 
         assert_that(
             self._subject.run(
+                admin_username='admin_username',
+                admin_password='admin_password',
                 root_password='P\@\$\$w0rd123\!\@\#',
             ),
             equal_to(True)

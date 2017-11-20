@@ -32,7 +32,7 @@ class IPv6Disabler(CLITieIn):
 
     def set_v6_off(self, name):
         command = 'networksetup -setv6off "{0}"'.format(name)
-        command_output = self.sudo_command(command)
+        command_output = self.command(command)
 
         if command_output.error_level != 0:
             self._logger.error(

@@ -16,7 +16,7 @@ from common import CLITieIn
 
 class UserDriveMapper(CLITieIn):
     def ping_hostname(self, hostname):
-        command = 'ping -c 4 -W 1000 -t 5 {0}"'.format(
+        command = 'ping -c 4 -W 1000 -t 5 {0}'.format(
             hostname,
         )
         command_output = self.command(command)

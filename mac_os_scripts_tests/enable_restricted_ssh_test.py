@@ -101,7 +101,7 @@ class RestrictedSSHEnablerTest(unittest.TestCase):
             self._subject.run_command.mock_calls,
             equal_to([
                 call(
-                    command_line='systemsetup -setremotelogin on', quiet=True, sudo_password_override=None, timeout=None, send_lines=None
+                    command_line='systemsetup -setremotelogin on', quiet=True, sudo_password_override=False, timeout=None, send_lines=None
                 )
             ])
         )
@@ -141,9 +141,9 @@ class RestrictedSSHEnablerTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='pfctl -d', quiet=True, sudo_password_override=None, timeout=None, send_lines=None),
-                call(command_line='pfctl -F all', quiet=True, sudo_password_override=None, timeout=None, send_lines=None),
-                call(command_line='pfctl -f /etc/pf.conf -e', quiet=True, sudo_password_override=None, timeout=None, send_lines=None)
+                call(command_line='pfctl -d', quiet=True, sudo_password_override=False, timeout=None, send_lines=None),
+                call(command_line='pfctl -F all', quiet=True, sudo_password_override=False, timeout=None, send_lines=None),
+                call(command_line='pfctl -f /etc/pf.conf -e', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
 

@@ -25,7 +25,7 @@ class AirDropDisablerTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='defaults write com.apple.NetworkBrowser DisableAirDrop -bool NO', quiet=True,
+                call(command_line='defaults write com.apple.NetworkBrowser DisableAirDrop -bool YES', quiet=True,
                      sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )

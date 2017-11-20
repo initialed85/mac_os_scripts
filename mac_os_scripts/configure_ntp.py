@@ -4,8 +4,8 @@ This script is responsible for enabling NTP and setting the NTP server
 
 Commands used:
 
-- defaults write /var/root/Library/Preferences/com.apple.loginwindow EnableMCXLoginScripts TRUE
-- defaults write var/root/Library/Preferences/com.apple.loginwindow MCXScriptTrust -string (trust level)
+- systemsetup -setusingnetworktime on
+- systemsetup -setnetworktimeserver (NTP server)
 
 """
 
@@ -15,7 +15,7 @@ from common import CLITieIn
 class NTPConfigurator(CLITieIn):
     def enable_ntp(self):
         command = 'systemsetup -setusingnetworktime on'
-        command_output = self.sudo_command(command)
+        command_output = self.command(command)
 
         if command_output.error_level != 0:
             self._logger.error(
@@ -29,7 +29,7 @@ class NTPConfigurator(CLITieIn):
 
     def set_ntp_server(self, server):
         command = 'systemsetup -setnetworktimeserver {0}'.format(server)
-        command_output = self.sudo_command(command)
+        command_output = self.command(command)
 
         if command_output.error_level != 0:
             self._logger.error(

@@ -20,7 +20,7 @@ from common import CLITieIn
 class RestrictedSSHEnabler(CLITieIn):
     def set_remote_login_on(self):
         command = 'systemsetup -setremotelogin on'
-        command_output = self.sudo_command(command)
+        command_output = self.command(command)
 
         if command_output.error_level != 0:
             self._logger.error(
@@ -69,7 +69,7 @@ class RestrictedSSHEnabler(CLITieIn):
         ]
         failed = False
         for command in commands:
-            command_output = self.sudo_command(command)
+            command_output = self.command(command)
 
             if command_output.error_level != 0:
                 self._logger.error(

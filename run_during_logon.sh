@@ -29,10 +29,10 @@ python -m mac_os_scripts.map_user_drive -f $FQDN -s $SHARE_PREFIX
 python -m mac_os_scripts.change_background
 
 # disable airdrop
-pyhon -m mac_os_scripts.disable_airdrop
+python -m mac_os_scripts.disable_airdrop
 
 # enable reduced transparency
-pyhon -m mac_os_scripts.enable_reduced_transparency
+python -m mac_os_scripts.enable_reduced_transparency
 
 # enable discrete graphics (GPU)
 python -m mac_os_scripts.enable_discrete_graphics

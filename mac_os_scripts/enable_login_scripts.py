@@ -15,7 +15,7 @@ from common import CLITieIn
 class LoginScriptEnabler(CLITieIn):
     def enable_mcx_login_scripts(self):
         command = 'defaults write /var/root/Library/Preferences/com.apple.loginwindow EnableMCXLoginScripts TRUE'
-        command_output = self.sudo_command(command)
+        command_output = self.command(command)
 
         if command_output.error_level != 0:
             self._logger.error(
@@ -36,7 +36,7 @@ class LoginScriptEnabler(CLITieIn):
         command = 'defaults write var/root/Library/Preferences/com.apple.loginwindow MCXScriptTrust -string {0}'.format(
             trust_level
         )
-        command_output = self.sudo_command(command)
+        command_output = self.command(command)
 
         if command_output.error_level != 0:
             self._logger.error(
