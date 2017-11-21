@@ -14,7 +14,7 @@ from common import CLITieIn
 class RestrictedIBSSEnabler(CLITieIn):
     def enable_restricted_ibss(self):
         command = '/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport prefs RequireAdminIBSS=YES'
-        command_output = self.sudo_command(command)
+        command_output = self.command(command)
 
         if command_output.error_level != 0:
             self._logger.error(

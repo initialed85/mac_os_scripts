@@ -26,7 +26,7 @@ class CLITieIn(object):
             sudo_password = sudo_password_override
 
         if sudo_password is not None:
-            command_line = 'echo "{0}" | sudo -S {1}'.format(sudo_password, command_line)
+            command_line = 'echo \'{0}\' | sudo -S {1}'.format(sudo_password, command_line)
 
         self._logger.debug('run_command invoked; quiet={0}, sudo_password_override={1}'.format(
             quiet, sudo_password

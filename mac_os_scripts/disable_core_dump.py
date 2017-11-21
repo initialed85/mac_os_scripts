@@ -14,7 +14,7 @@ from common import CLITieIn
 class CoreDumpDisabler(CLITieIn):
     def disable_core_dump(self):
         command = 'sysctl kern.coredump=0'
-        command_output = self.sudo_command(command)
+        command_output = self.command(command)
 
         if command_output.error_level != 0:
             self._logger.error(

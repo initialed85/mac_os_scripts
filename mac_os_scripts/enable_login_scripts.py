@@ -33,7 +33,7 @@ class LoginScriptEnabler(CLITieIn):
         :param value: string FullTrust, PartialTrust or Anonymous
         :return:
         """
-        command = 'defaults write var/root/Library/Preferences/com.apple.loginwindow MCXScriptTrust -string {0}'.format(
+        command = 'defaults write var/root/Library/Preferences/com.apple.loginwindow MCXScriptTrust -string \'{0}\''.format(
             trust_level
         )
         command_output = self.command(command)

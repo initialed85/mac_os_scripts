@@ -14,7 +14,7 @@ from common import CLITieIn
 
 class RootUserConfigurator(CLITieIn):
     def set_root_password(self, root_password):
-        command = 'dscl . -passwd /Users/root {0}'.format(root_password)
+        command = 'dscl . -passwd /Users/root \'{0}\''.format(root_password)
         command_output = self.command(command)
 
         if command_output.error_level != 0:
@@ -28,7 +28,7 @@ class RootUserConfigurator(CLITieIn):
         return True
 
     def disable_root_user(self, admin_username, admin_password, root_password):
-        command = 'dsenableroot -d -u {0} -p {1} -r {2}'.format(
+        command = 'dsenableroot -d -u \'{0}\' -p \'{1}\' -r \'{2}\''.format(
             admin_username, admin_password, root_password
         )
         command_output = self.command(command)

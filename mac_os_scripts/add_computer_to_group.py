@@ -40,7 +40,7 @@ class ComputerToGroupAdder(CLITieIn):
         command = 'ldapmodify -H ldap://{0} -f /tmp/register.ldif -D {1} -w {2} -x -c -v'.format(
             fqdn, domain_username, domain_password
         )
-        command_output = self.sudo_command(command)
+        command_output = self.command(command)
 
         if command_output.error_level != 0:
             self._logger.error(

@@ -5,32 +5,39 @@
 # you'll need to have copied the inner mac_os_scripts folder to /usr/local/zetta as well
 # as the two bash scripts
 
-# WARNING: all passwords needs to be correctly escaped- e.g. "Password 123!@#" = "Password\ 123\!\@\#" (without
-# the quotes)
+# WARNING: all special characters need to be strings with single quotes in order to not get
+# interpreted by the shell, e.g. P@$$w0rd123!@# should be 'P@$$w0rd123!@#'- basically, it's
+# it's safest to pass all strings as single quotes unless you need to include variables in them
 
 # credentials that are required
-LOCAL_ADMIN_USERNAME=admin_username
-LOCAL_ADMIN_PASSWORD=Password1
+LOCAL_ADMIN_USERNAME='admin_username'
+LOCAL_ADMIN_PASSWORD='Password1'
 
 # credentials that'll be set
-ROOT_PASSWORD=P\@\$\$w0rd123\!\@\#
-FIRMWARE_PASSWORD=P\@\$\$w0rd123\!\@\#
+ROOT_PASSWORD='P@$$w0rd123!@#'
+FIRMWARE_PASSWORD='P@$$w0rd123!@#'
 
 # for adding the computer to a group (note use of $HOSTNAME)
 SOURCE_OU_PATH="CN=$HOSTNAME,OU=macOS,OU=Computers,OU=Some Place,DC=some,DC=domain,DC=com"
 DESTINATION_OU_PATH="CN=Developers,OU=Users,OU=Groups,OU=Some Place,DC=some,DC=domain,DC=com"
-DOMAIN=some.domain.com
+DOMAIN='some.domain.com'
 DOMAIN_ADMIN_USERNAME="some.admin@$DOMAIN"
-DOMAIN_ADMIN_PASSWORD=Password2
+DOMAIN_ADMIN_PASSWORD='Password2'
 
-# this is a comma-separated list of IPs allowed to SSH into machines
-SSH_ALLOWED_HOSTS=192.168.1.1,192.168.1.2
+# this is a comma-separated list of IPs or subnets with prefixes allowed to SSH into machines
+SSH_ALLOWED_HOSTS='192.168.137.0/24,10.0.1.0/24,192.168.1.1,127.0.0.1'
 
 # this is the ntp server to configure
 NTP_SERVER=time1.google.com
 
 # need to run scripts from here because of Python path requirements
 cd /usr/local/zetta/
+
+# disable metadata file creation
+python -m mac_os_scripts.disable_metadata_file_creation
+
+# configure auditing flags
+python -m mac_os_scripts.configure_auditing_flags
 
 # disable ipv6
 python -m mac_os_scripts.disable_ipv6
@@ -66,4 +73,7 @@ python -m mac_os_scripts.add_computer_to_group -s $SOURCE_OU_PATH -d $DESTINATIO
 python -m mac_os_scripts.disable_guest_connection_to_shared_folders
 
 # set firmware password
-python -m mac_os_scripts.set_firmware_password -f $FIRMWARE_PASSWORD
+# python -m mac_os_scripts.set_firmware_password -f $FIRMWARE_PASSWORD
+
+# enable discrete graphics (GPU)
+python -m mac_os_scripts.enable_discrete_graphics
