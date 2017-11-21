@@ -10,7 +10,7 @@
 # it's safest to pass all strings as single quotes unless you need to include variables in them
 
 # credentials that are required
-LOCAL_ADMIN_USERNAME='admin_username'
+LOCAL_ADMIN_USERNAME='bwadmin'
 LOCAL_ADMIN_PASSWORD='Password1'
 
 # credentials that'll be set
@@ -18,23 +18,20 @@ ROOT_PASSWORD='P@$$w0rd123!@#'
 FIRMWARE_PASSWORD='P@$$w0rd123!@#'
 
 # for adding the computer to a group (note use of $HOSTNAME)
-SOURCE_OU_PATH="CN=$HOSTNAME,OU=macOS,OU=Computers,OU=Some Place,DC=some,DC=domain,DC=com"
-DESTINATION_OU_PATH="CN=Developers,OU=Users,OU=Groups,OU=Some Place,DC=some,DC=domain,DC=com"
-DOMAIN='some.domain.com'
-DOMAIN_ADMIN_USERNAME="some.admin@$DOMAIN"
-DOMAIN_ADMIN_PASSWORD='Password2'
+SOURCE_OU_PATH="CN=$HOSTNAME,OU=macOS,OU=Computers,OU=Gray Lab,DC=grayman,DC=com,DC=au"
+DESTINATION_OU_PATH="CN=Role-Adm-WSUS.Administrator-U-GS,OU=Admin Roles,OU=Groups,OU=Gray Lab,DC=grayman,DC=com,DC=au"
+DOMAIN='grayman.com.au'
+DOMAIN_ADMIN_USERNAME="administrator@$DOMAIN"
+DOMAIN_ADMIN_PASSWORD='Password1'
 
 # this is a comma-separated list of IPs or subnets with prefixes allowed to SSH into machines
-SSH_ALLOWED_HOSTS='192.168.137.0/24,10.0.1.0/24,192.168.1.1,127.0.0.1'
+SSH_ALLOWED_HOSTS='10.0.1.11'
 
 # this is the ntp server to configure
-NTP_SERVER=time1.google.com
+NTP_SERVER=graydc01.grayman.com.au
 
 # need to run scripts from here because of Python path requirements
 cd /usr/local/zetta/
-
-# disable metadata file creation
-python -m mac_os_scripts.disable_metadata_file_creation
 
 # configure auditing flags
 python -m mac_os_scripts.configure_auditing_flags
@@ -46,7 +43,7 @@ python -m mac_os_scripts.disable_ipv6
 python -m mac_os_scripts.enable_security_logging
 
 # enable login scripts
-python -m mac_os_scripts.enable_login_scripts
+python -m mac_os_scripts.enable_login_scripts -t PartialTrust
 
 # enable restricted ssh for specified hosts
 python -m mac_os_scripts.enable_restricted_ssh -a $SSH_ALLOWED_HOSTS
