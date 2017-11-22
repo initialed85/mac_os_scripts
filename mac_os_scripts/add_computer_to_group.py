@@ -25,8 +25,8 @@ class ComputerToGroupAdder(CLITieIn):
             'add: member\n'
             'member: {1}\n'
         ).format(
-            source_ou_path,
             destination_ou_path,
+            source_ou_path,
         )
 
         try:

@@ -5,7 +5,7 @@ This script is responsible for mapping the user's shared drive
 Commands used:
 
 - ping -c 4 -W 1000 -t 5 (file server)
-- open "smb://(file server)/(user share)/(user)
+- open "smb://(file server)/(user share)/(user)"
 
 """
 
