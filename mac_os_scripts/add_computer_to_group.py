@@ -31,7 +31,12 @@ class ComputerToGroupAdder(CLITieIn):
 
         try:
             self.write_file('/tmp/register.ldif', data)
-        except:
+        except Exception as e:
+            self._logger.error(
+                'build_register_ldif raised exception stating {0}'.format(
+                    e
+                )
+            )
             return False
 
         return True

@@ -27,7 +27,7 @@ class RestrictedIBSSEnablerTest(unittest.TestCase):
             equal_to([
                 call(
                     command_line='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport prefs RequireAdminIBSS=YES',
-                    quiet=True, sudo_password_override=None, timeout=None, send_lines=None)
+                    quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
 

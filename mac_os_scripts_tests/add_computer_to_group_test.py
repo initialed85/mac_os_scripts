@@ -6,10 +6,10 @@ from mock import MagicMock, call
 from mac_os_scripts.add_computer_to_group import ComputerToGroupAdder
 from mac_os_scripts_tests.test_common import _NO_OUTPUT
 
-_TMP_REGISTER_LDIF = """dn: CN=some_hostname,OU=macOS,OU=Computers,OU=Some Place,DC=some,DC=domain,DC=com
+_TMP_REGISTER_LDIF = """dn: CN=Developers,OU=Users,OU=Groups,OU=Some Place,DC=some,DC=domain,DC=com
 changetype: modify
 add: member
-member: CN=Developers,OU=Users,OU=Groups,OU=Some Place,DC=some,DC=domain,DC=com
+member: CN=some_hostname,OU=macOS,OU=Computers,OU=Some Place,DC=some,DC=domain,DC=com
 """
 
 
@@ -59,7 +59,7 @@ class ComputerToGroupAdderTest(unittest.TestCase):
             equal_to([
                 call(
                     command_line='ldapmodify -H ldap://some.domain.com -f /tmp/register.ldif -D some.admin -w P\\@\\$\\$w0rd123\\!\\@\\# -x -c -v',
-                    quiet=True, sudo_password_override=None, timeout=None, send_lines=None
+                    quiet=True, sudo_password_override=False, timeout=None, send_lines=None
                 )
             ])
         )

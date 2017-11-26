@@ -25,8 +25,8 @@ class FirmwarePasswordSetterTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='expect -d -f /usr/local/zetta/mac_os_scripts/external/set_firmware_password.expect OtherPassword',
-                     quiet=True, send_lines=None, sudo_password_override=None, timeout=None)
+                call(command_line='expect -d -f /usr/local/zetta/mac_os_scripts/external/set_firmware_password.expect \'OtherPassword\'',
+                     quiet=True, send_lines=None, sudo_password_override=False, timeout=None)
             ])
         )
 

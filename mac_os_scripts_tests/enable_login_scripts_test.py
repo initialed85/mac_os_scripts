@@ -46,7 +46,7 @@ class LoginScriptEnablerTest(unittest.TestCase):
             self._subject.run_command.mock_calls,
             equal_to([
                 call(
-                    command_line='defaults write var/root/Library/Preferences/com.apple.loginwindow MCXScriptTrust -string FullTrust',
+                    command_line='defaults write var/root/Library/Preferences/com.apple.loginwindow MCXScriptTrust -string \'FullTrust\'',
                     quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
