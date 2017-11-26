@@ -70,7 +70,7 @@ python -m mac_os_scripts.add_computer_to_group -s $SOURCE_OU_PATH -d $DESTINATIO
 python -m mac_os_scripts.disable_guest_connection_to_shared_folders
 
 # set firmware password
-# python -m mac_os_scripts.set_firmware_password -f $FIRMWARE_PASSWORD
+python -m mac_os_scripts.set_firmware_password -f $FIRMWARE_PASSWORD
 
 # enable discrete graphics (GPU)
 python -m mac_os_scripts.enable_discrete_graphics
