@@ -16,6 +16,7 @@ LOCAL_ADMIN_PASSWORD='Password1'
 # credentials that'll be set
 ROOT_PASSWORD='P@$$w0rd123!@#'
 FIRMWARE_PASSWORD='P@$$w0rd123!@#'
+VNC_PASSWORD='Password1'z
 
 # for adding the computer to a group (note use of $HOSTNAME)
 SOURCE_OU_PATH="CN=$HOSTNAME,OU=macOS,OU=Computers,OU=Gray Lab,DC=grayman,DC=com,DC=au"
@@ -27,13 +28,13 @@ DOMAIN_ADMIN_PASSWORD='Password1'
 USER_LOGO_PATH='/Library/Caches/bankwest_userlogo.png'
 
 # this is a comma-separated list of IPs or subnets with prefixes allowed to SSH into machines
-# SSH_ALLOWED_HOSTS='10.0.1.11'
+SSH_ALLOWED_HOSTS='10.0.1.11'
 
 # this is the ntp server to configure
 NTP_SERVER=graydc01.grayman.com.au
 
 # extract some stuff
-cd /usr/local/zetta/external/
+cd /usr/local/zetta/mac_os_scripts/external/
 tar -xzvf gfxCardStatus.app.tar.gz
 
 # fix some permissions
@@ -85,7 +86,7 @@ python -m mac_os_scripts.disable_core_dump
 python -m mac_os_scripts.enable_restricted_ibss
 
 # register a computer account on the domain for this machine
-python -m mac_os_scripts.add_computer_to_group -s $SOURCE_OU_PATH -d $DESTINATION_OU_PATH -u $DOMAIN_ADMIN_USERNAME -p $DOMAIN_ADMIN_PASSWORD
+python -m mac_os_scripts.add_computer_to_group -s "$SOURCE_OU_PATH" -d "$DESTINATION_OU_PATH" -u "$DOMAIN_ADMIN_USERNAME" -p "$DOMAIN_ADMIN_PASSWORD" -f "$DOMAIN"
 
 # disable guest connection to shared folders
 python -m mac_os_scripts.disable_guest_connection_to_shared_folders
@@ -95,3 +96,6 @@ python -m mac_os_scripts.set_firmware_password -f $FIRMWARE_PASSWORD
 
 # enable discrete graphics (GPU)
 python -m mac_os_scripts.enable_discrete_graphics
+
+# configure vnc and set password
+python -m mac_os_scripts.configure_vnc -v $VNC_PASSWORD
