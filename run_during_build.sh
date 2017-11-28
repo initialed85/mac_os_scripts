@@ -25,7 +25,7 @@ DOMAIN='grayman.com.au'
 DOMAIN_ADMIN_USERNAME="administrator@$DOMAIN"
 DOMAIN_ADMIN_PASSWORD='Password1'
 
-USER_LOGO_PATH='/Library/Caches/bankwest_userlogo.png'
+USER_LOGO_PATH='/Library/Caches/bankwest_userlogo.tif'
 
 # this is a comma-separated list of IPs or subnets with prefixes allowed to SSH into machines
 SSH_ALLOWED_HOSTS='10.0.1.11'
