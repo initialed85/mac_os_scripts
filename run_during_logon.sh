@@ -20,7 +20,7 @@ cd /usr/local/zetta/
 python -m mac_os_scripts.disable_handoff
 
 # change background image on all displays (affects active desktop for that each display only)
-python -m mac_os_scripts.change_background
+# python -m mac_os_scripts.change_background
 
 # disable airdrop
 python -m mac_os_scripts.disable_airdrop

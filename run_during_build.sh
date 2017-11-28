@@ -24,6 +24,8 @@ DOMAIN='grayman.com.au'
 DOMAIN_ADMIN_USERNAME="administrator@$DOMAIN"
 DOMAIN_ADMIN_PASSWORD='Password1'
 
+USER_LOGO_PATH='/Library/Caches/bankwest_userlogo.png'
+
 # this is a comma-separated list of IPs or subnets with prefixes allowed to SSH into machines
 SSH_ALLOWED_HOSTS='10.0.1.11'
 
@@ -43,7 +45,7 @@ python -m mac_os_scripts.disable_ipv6
 python -m mac_os_scripts.enable_security_logging
 
 # enable login scripts
-python -m mac_os_scripts.enable_login_scripts -t PartialTrust
+# python -m mac_os_scripts.enable_login_scripts -t PartialTrust
 
 # enable restricted ssh for specified hosts
 python -m mac_os_scripts.enable_restricted_ssh -a $SSH_ALLOWED_HOSTS
@@ -52,7 +54,7 @@ python -m mac_os_scripts.enable_restricted_ssh -a $SSH_ALLOWED_HOSTS
 python -m mac_os_scripts.configure_ntp -s $NTP_SERVER
 
 # set the user logo for the build user
-python -m mac_os_scripts.set_user_account_logo -u $LOCAL_ADMIN_USERNAME -l /usr/local/zetta/user_logo.tiff
+python -m mac_os_scripts.set_user_account_logo -u $LOCAL_ADMIN_USERNAME -l $USER_LOGO_PATH
 
 # set the root password and then disable the root user
 python -m mac_os_scripts.configure_root_user -u $LOCAL_ADMIN_USERNAME -p $LOCAL_ADMIN_PASSWORD -r $ROOT_PASSWORD

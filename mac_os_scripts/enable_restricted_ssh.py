@@ -86,13 +86,13 @@ class RestrictedSSHEnabler(CLITieIn):
             self._logger.error('failed change_background; cannot continue')
             return False
 
-        if not self.modify_firewall_config(allowed_hosts):
-            self._logger.error('failed modify_firewall_config; cannot continue')
-            return False
+        # if not self.modify_firewall_config(allowed_hosts):
+        #     self._logger.error('failed modify_firewall_config; cannot continue')
+        #     return False
 
-        if not self.restart_firewall():
-            self._logger.error('failed restart_firewall; cannot continue')
-            return False
+        # if not self.restart_firewall():
+        #     self._logger.error('failed restart_firewall; cannot continue')
+        #     return False
 
         self._logger.debug('passed')
         return True
