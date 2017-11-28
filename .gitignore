@@ -3,7 +3,4 @@
 test_results
 *.pyc
 .DS_Store
-Project Security Best Practices for MAC OSX.pdf
-notes.txt
 deploy
-build.py

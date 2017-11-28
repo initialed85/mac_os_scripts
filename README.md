@@ -17,6 +17,9 @@ The two entrypoint scripts above are written in Bash and the rest of the scripts
 to make for easy unit testing (with the exception of a Bash script and a AppleScript script called by
 Python). 
 
+There are also some scripts in the "user template" folder with a README of their own- these will assist
+you in creating a user template to your liking.
+
 ### How do I use it?
 
 Frankly I don't know, I'm not a sysadmin- I just write the scripts. As best I understand it you can load files
@@ -24,6 +27,9 @@ in at build time and tell scripts to run.
 
 What you will want to do is edit run_during_build.sh and put all the necessary passwords, network paths etc
 in before you mix the script into your image building system.
+
+Then, when you're ready to ship it, simply run "build.sh" or "build.bat" (depending on your platform) and it should
+put all the necessary parts into a "deploy" folder for you.
 
 ### How do I work on it?
 
