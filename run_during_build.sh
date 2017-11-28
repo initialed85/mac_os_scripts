@@ -67,7 +67,7 @@ python -m mac_os_scripts.enable_security_logging
 # enable login scripts
 # python -m mac_os_scripts.enable_login_scripts -t PartialTrust
 
-# enable restricted ssh for specified hosts
+# enable restricted ssh for specified hosts (doesn't do anything with -a flag at the moment)
 python -m mac_os_scripts.enable_restricted_ssh -a $SSH_ALLOWED_HOSTS
 
 # enable ntp and set ntp server
