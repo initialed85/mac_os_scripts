@@ -44,6 +44,13 @@ chmod 777 *.expect
 # need to run scripts from here because of Python path requirements
 cd /usr/local/zetta/
 
+# backup the old user template
+mv -f "/System/Library/User Template/English.lproj" "/System/Library/User Template/English.lproj-backup"
+
+# setup the new user template
+tar -xzvf English.lproj.tar.gz
+ditto -v English.lproj /System/Library/User Template/English.lproj
+
 # fix some more permissions
 chmod 777 run_during_logon.sh
 
