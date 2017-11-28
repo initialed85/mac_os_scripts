@@ -4,6 +4,7 @@ This script is responsible for setting the logo for the current user
 
 Commands used:
 
+- dscl . delete /Users/(username) JPEGPhoto
 - dscl . delete /Users/(username) Picture
 - dscl . create /Users/(username) Picture "(new user logo path)"
 
@@ -13,6 +14,22 @@ from common import CLITieIn
 
 
 class LocalUserAccountLogoSetter(CLITieIn):
+    def delete_user_account_logo_jpeg(self, username):
+        command = 'dscl . delete /Users/{0} JPEGPhoto'.format(
+            username
+        )
+        command_output = self.command(command)
+
+        if command_output.error_level != 0:
+            self._logger.error(
+                '{0} failed stating {1}'.format(
+                    command, command_output
+                )
+            )
+            return False
+
+        return True
+
     def delete_user_account_logo(self, username):
         command = 'dscl . delete /Users/{0} Picture'.format(
             username
@@ -46,6 +63,12 @@ class LocalUserAccountLogoSetter(CLITieIn):
         return True
 
     def run(self, username, logo_path):
+        if not self.delete_user_account_logo_jpeg(username):
+            self._logger.error('failed delete_user_account_logo with username={0}; cannot continue'.format(
+                username
+            ))
+            return False
+
         if not self.delete_user_account_logo(username):
             self._logger.error('failed delete_user_account_logo with username={0}; cannot continue'.format(
                 username

@@ -14,6 +14,24 @@ class LocalUserAccountLogoSetterTest(unittest.TestCase):
         )
         self._subject.run_command = MagicMock()
 
+    def test_delete_user_account_logo_jpeg(self):
+        self._subject.run_command.return_value = _NO_OUTPUT
+
+        assert_that(
+            self._subject.delete_user_account_logo_jpeg(
+                username='SomeUser',
+            ),
+            equal_to(True)
+        )
+
+        assert_that(
+            self._subject.run_command.mock_calls,
+            equal_to([
+                call(command_line='dscl . delete /Users/SomeUser JPEGPhoto', quiet=True, sudo_password_override=False, timeout=None,
+                     send_lines=None)
+            ])
+        )
+
     def test_delete_user_account_logo(self):
         self._subject.run_command.return_value = _NO_OUTPUT
 
@@ -52,6 +70,8 @@ class LocalUserAccountLogoSetterTest(unittest.TestCase):
         )
 
     def test_run_pass(self):
+        self._subject.delete_user_account_logo_jpeg = MagicMock()
+        self._subject.delete_user_account_logo_jpeg.return_value = True
         self._subject.delete_user_account_logo = MagicMock()
         self._subject.delete_user_account_logo.return_value = True
         self._subject.create_user_account_logo = MagicMock()
