@@ -30,8 +30,8 @@ USER_LOGO_PATH='/Library/Caches/bankwest_userlogo.tif'
 # this is a comma-separated list of IPs or subnets with prefixes allowed to SSH into machines
 SSH_ALLOWED_HOSTS='10.0.1.11'
 
-# this is the ntp server to configure
-NTP_SERVER=graydc01.grayman.com.au
+# this is the ntp server to configure (commented- will be called before domain join)
+# NTP_SERVER=graydc01.grayman.com.au
 
 # extract some stuff
 cd /usr/local/zetta/mac_os_scripts/external/
@@ -64,14 +64,14 @@ python -m mac_os_scripts.disable_ipv6
 # enable security logging
 python -m mac_os_scripts.enable_security_logging
 
-# enable login scripts
+# enable login scripts (commented- not required)
 # python -m mac_os_scripts.enable_login_scripts -t PartialTrust
 
-# enable restricted ssh for specified hosts (doesn't do anything with -a flag at the moment)
+# enable restricted ssh for specified hosts (doesn't do anything with -a $SSH_ALLOWED_HOSTS for now)
 python -m mac_os_scripts.enable_restricted_ssh -a $SSH_ALLOWED_HOSTS
 
-# enable ntp and set ntp server
-python -m mac_os_scripts.configure_ntp -s $NTP_SERVER
+# enable ntp and set ntp server (commented- will be called before domain join)
+# python -m mac_os_scripts.configure_ntp -s $NTP_SERVER
 
 # set the user logo for the build user
 python -m mac_os_scripts.set_user_account_logo -u $LOCAL_ADMIN_USERNAME -l $USER_LOGO_PATH
