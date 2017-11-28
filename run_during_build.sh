@@ -16,7 +16,7 @@ LOCAL_ADMIN_PASSWORD='Password1'
 # credentials that'll be set
 ROOT_PASSWORD='P@$$w0rd123!@#'
 FIRMWARE_PASSWORD='P@$$w0rd123!@#'
-VNC_PASSWORD='Password1'z
+VNC_PASSWORD='Password1'
 
 # for adding the computer to a group (note use of $HOSTNAME)
 SOURCE_OU_PATH="CN=$HOSTNAME,OU=macOS,OU=Computers,OU=Gray Lab,DC=grayman,DC=com,DC=au"
