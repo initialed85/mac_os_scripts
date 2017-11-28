@@ -50,7 +50,7 @@ mv -f "/System/Library/User Template/English.lproj" "/System/Library/User Templa
 
 # setup the new user template
 tar -xzvf English.lproj.tar.gz
-ditto -v English.lproj /System/Library/User Template/English.lproj
+ditto -v English.lproj "/System/Library/User Template/English.lproj"
 
 # fix some more permissions
 chmod 777 run_during_logon.sh

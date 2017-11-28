@@ -57,5 +57,5 @@ if __name__ == '__main__':
     )
 
     actor.run(
-        password=args.firmware_password
+        password=args.vnc_password
     )
