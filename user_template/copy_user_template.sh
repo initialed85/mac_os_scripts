@@ -10,7 +10,7 @@ if [[ "$USER" != "root" ]] ; then
 fi
 
 echo "info: copying the current user template to this folder"
-cp -fr "$TARGET_USER_TEMPLATE" .
+ditto -v "$TARGET_USER_TEMPLATE" ./English.lproj
 echo ""
 
 echo "info: compressing into a .tar.gz"

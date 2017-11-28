@@ -27,13 +27,25 @@ DOMAIN_ADMIN_PASSWORD='Password1'
 USER_LOGO_PATH='/Library/Caches/bankwest_userlogo.png'
 
 # this is a comma-separated list of IPs or subnets with prefixes allowed to SSH into machines
-SSH_ALLOWED_HOSTS='10.0.1.11'
+# SSH_ALLOWED_HOSTS='10.0.1.11'
 
 # this is the ntp server to configure
 NTP_SERVER=graydc01.grayman.com.au
 
+# extract some stuff
+cd /usr/local/zetta/external/
+tar -xzvf gfxCardStatus.app.tar.gz
+
+# fix some permissions
+chmod 777 *.app
+chmod 777 *.sh
+chmod 777 *.expect
+
 # need to run scripts from here because of Python path requirements
 cd /usr/local/zetta/
+
+# fix some more permissions
+chmod 777 run_during_logon.sh
 
 # configure auditing flags
 python -m mac_os_scripts.configure_auditing_flags
