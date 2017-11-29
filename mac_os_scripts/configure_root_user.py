@@ -105,7 +105,7 @@ if __name__ == '__main__':
         root_password=args.root_password,
     )
 
-    if result != 0:
+    if not result:
         exit(1)
 
     exit(0)

@@ -77,7 +77,7 @@ if __name__ == '__main__':
         server=args.server,
     )
 
-    if result != 0:
+    if not result:
         exit(1)
 
     exit(0)

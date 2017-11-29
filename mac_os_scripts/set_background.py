@@ -87,7 +87,7 @@ if __name__ == '__main__':
         background_path=args.background_path
     )
 
-    if result != 0:
+    if not result:
         exit(1)
 
     exit(0)

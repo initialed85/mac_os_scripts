@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
     result = actor.run()
 
-    if result != 0:
+    if not result:
         exit(1)
 
     exit(0)

@@ -86,7 +86,7 @@ if __name__ == '__main__':
         trust_level=args.trust_level,
     )
 
-    if result != 0:
+    if not result:
         exit(1)
 
     exit(0)

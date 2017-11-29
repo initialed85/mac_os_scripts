@@ -121,7 +121,7 @@ if __name__ == '__main__':
         allowed_hosts=args.allowed_hosts,
     )
 
-    if result != 0:
+    if not result:
         exit(1)
 
     exit(0)

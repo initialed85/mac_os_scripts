@@ -102,7 +102,7 @@ if __name__ == '__main__':
         username=username,
     )
 
-    if result != 0:
+    if not result:
         exit(1)
 
     exit(0)

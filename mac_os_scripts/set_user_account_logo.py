@@ -119,7 +119,7 @@ if __name__ == '__main__':
         logo_path=args.logo_path
     )
 
-    if result != 0:
+    if not result:
         exit(1)
 
     exit(0)
