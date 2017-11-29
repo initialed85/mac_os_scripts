@@ -9,6 +9,18 @@
 # interpreted by the shell, e.g. P@$$w0rd123!@# should be 'P@$$w0rd123!@#'- basically, it's
 # it's safest to pass all strings as single quotes unless you need to include variables in them
 
+# logging function
+LOG_FILENAME=/tmp/mac_os_scripts_run_during_build.log
+log() {
+    echo `date` $0 $@ >> $LOG_FILENAME
+}
+
+log '--------'
+log 'started'
+log '--------'
+
+log 'setting some environment variables'
+
 # credentials that are required
 LOCAL_ADMIN_USERNAME='bwadmin'
 LOCAL_ADMIN_PASSWORD='Password1'
@@ -33,69 +45,100 @@ SSH_ALLOWED_HOSTS='10.0.1.11'
 # this is the ntp server to configure (commented- will be called before domain join)
 # NTP_SERVER=graydc01.grayman.com.au
 
-# extract some stuff
 cd /usr/local/zetta/mac_os_scripts/external/
+
+log 'extracting some stuff'
 tar -xzvf gfxCardStatus.app.tar.gz
+log "return level $?"
 
-# fix some permissions
+log 'fixing some permissions'
 chmod 777 *.app
+log "return level $?"
 chmod 777 *.sh
+log "return level $?"
 chmod 777 *.expect
+log "return level $?"
 
-# need to run scripts from here because of Python path requirements
 cd /usr/local/zetta/
 
-# backup the old user template
+log 'backing up old user template'
 mv -f "/System/Library/User Template/English.lproj" "/System/Library/User Template/English.lproj-backup"
+log "return level $?"
 
-# setup the new user template
+log 'extracting new user template'
 tar -xzvf English.lproj.tar.gz
+log "return level $?"
+
+log 'dittoing new user template into place'
 ditto -v English.lproj "/System/Library/User Template/English.lproj"
+log "return level $?"
 
-# fix some more permissions
+log 'fixing some more permissions'
 chmod 777 run_during_logon.sh
+log "return level $?"
 
-# configure auditing flags
+log 'python -m mac_os_scripts.configure_auditing_flags'
 python -m mac_os_scripts.configure_auditing_flags
+log "return level $?"
 
-# disable ipv6
+log 'python -m mac_os_scripts.disable_ipv6'
 python -m mac_os_scripts.disable_ipv6
+log "return level $?"
 
-# enable security logging
+log 'python -m mac_os_scripts.enable_security_logging'
 python -m mac_os_scripts.enable_security_logging
+log "return level $?"
 
-# enable login scripts (commented- not required)
+# skipping- handled with LaunchDaemon
+# log 'python -m mac_os_scripts.enable_login_scripts -t PartialTrust'
 # python -m mac_os_scripts.enable_login_scripts -t PartialTrust
+# log "return level $?"
 
-# enable restricted ssh for specified hosts (doesn't do anything with -a $SSH_ALLOWED_HOSTS for now)
-python -m mac_os_scripts.enable_restricted_ssh -a $SSH_ALLOWED_HOSTS
+log "python -m mac_os_scripts.enable_restricted_ssh -a $SSH_ALLOWED_HOSTS"
+python -m mac_os_scripts.enable_restricted_ssh -a $SSH_ALLOWED_HOSTS  # $SSH_ALLOWED_HOSTS required to be not empty but is ignored for now
+log "return level $?"
 
-# enable ntp and set ntp server (commented- will be called before domain join)
+# skipping- handled in another script
+# log 'python -m mac_os_scripts.configure_ntp -s $NTP_SERVER'
 # python -m mac_os_scripts.configure_ntp -s $NTP_SERVER
+# log "return level $?"
 
-# set the user logo for the build user
+log "python -m mac_os_scripts.set_user_account_logo -u $LOCAL_ADMIN_USERNAME -l $USER_LOGO_PATH"
 python -m mac_os_scripts.set_user_account_logo -u $LOCAL_ADMIN_USERNAME -l $USER_LOGO_PATH
+log "return level $?"
 
-# set the root password and then disable the root user
+log "python -m mac_os_scripts.configure_root_user -u $LOCAL_ADMIN_USERNAME -p $LOCAL_ADMIN_PASSWORD -r $ROOT_PASSWORD"
 python -m mac_os_scripts.configure_root_user -u $LOCAL_ADMIN_USERNAME -p $LOCAL_ADMIN_PASSWORD -r $ROOT_PASSWORD
+log "return level $?"
 
-# disable core dumps
+log 'python -m mac_os_scripts.disable_core_dump'
 python -m mac_os_scripts.disable_core_dump
+log "return level $?"
 
-# enable restricted IBSS (ad-hoc/computer-to-computer wireless networking)
+log 'python -m mac_os_scripts.enable_restricted_ibss'
 python -m mac_os_scripts.enable_restricted_ibss
+log "return level $?"
 
-# register a computer account on the domain for this machine
+log "python -m mac_os_scripts.add_computer_to_group -s $SOURCE_OU_PATH -d $DESTINATION_OU_PATH -u $DOMAIN_ADMIN_USERNAME -p $DOMAIN_ADMIN_PASSWORD -f $DOMAIN"
 python -m mac_os_scripts.add_computer_to_group -s "$SOURCE_OU_PATH" -d "$DESTINATION_OU_PATH" -u "$DOMAIN_ADMIN_USERNAME" -p "$DOMAIN_ADMIN_PASSWORD" -f "$DOMAIN"
+log "return level $?"
 
-# disable guest connection to shared folders
+log 'python -m mac_os_scripts.disable_guest_connection_to_shared_folders'
 python -m mac_os_scripts.disable_guest_connection_to_shared_folders
+log "return level $?"
 
-# set firmware password
+log "python -m mac_os_scripts.set_firmware_password -f $FIRMWARE_PASSWORD"
 python -m mac_os_scripts.set_firmware_password -f $FIRMWARE_PASSWORD
+log "return level $?"
 
-# enable discrete graphics (GPU)
+log 'python -m mac_os_scripts.enable_discrete_graphics'
 python -m mac_os_scripts.enable_discrete_graphics
+log "return level $?"
 
-# configure vnc and set password
+log "python -m mac_os_scripts.configure_vnc -v $VNC_PASSWORD"
 python -m mac_os_scripts.configure_vnc -v $VNC_PASSWORD
+log "return level $?"
+
+log '--------'
+log 'finished'
+log '--------'
