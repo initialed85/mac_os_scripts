@@ -58,8 +58,8 @@ class IPv6Disabler(CLITieIn):
 
         return {
             y[0].strip().lower(): ':'.join(y[1:]).strip() for y in [
-            x.split(':') for x in command_output.stdout.split('\n')
-        ] if len(y) >= 2
+                x.split(':') for x in command_output.stdout.split('\n')
+            ] if len(y) >= 2
         }
 
     def run(self):

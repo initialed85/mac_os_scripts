@@ -27,7 +27,11 @@ def get_logger(name, max_bytes=16384, backup_count=2, also_stdout=True):
 
         logger.setLevel(logging.DEBUG)
 
-        username = get_username()
+        try:
+            username = get_username()
+        except KeyError:
+            print 'WARNING: failed to get username, assuming "root"'
+            username = 'root'
 
         handler = logging.handlers.RotatingFileHandler(
             '/tmp/mac_os_scripts_{0}{1}.log'.format(
