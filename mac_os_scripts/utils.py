@@ -165,17 +165,17 @@ def run_command(command_line, quiet=True, timeout=None, send_lines=None):
 
     try:
         p.terminate()
-    except:
+    except BaseException:
         pass
 
     try:
         p.kill()
-    except:
+    except BaseException:
         pass
 
     try:
         error_level = p.returncode
-    except:
+    except BaseException:
         pass
 
     run_command_output = RunCommandOutput(

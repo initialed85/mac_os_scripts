@@ -18,7 +18,8 @@ class CLITieIn(object):
         self._logger.debug('get_hostname={0}'.format(hostname))
         return hostname
 
-    def run_command(self, command_line, quiet=True, sudo_password_override=None, timeout=None, send_lines=None):
+    def run_command(self, command_line, quiet=True,
+                    sudo_password_override=None, timeout=None, send_lines=None):
         sudo_password = self._sudo_password
         if sudo_password_override is False:
             sudo_password = None
@@ -69,7 +70,8 @@ class CLITieIn(object):
             send_lines=send_lines,
         )
 
-    def sudo_command(self, command_line, quiet=True, sudo_password_override=None, timeout=None, send_lines=None):
+    def sudo_command(self, command_line, quiet=True,
+                     sudo_password_override=None, timeout=None, send_lines=None):
         self._logger.debug('sudo_command invoked')
         return self.run_command(
             command_line=command_line,

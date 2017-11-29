@@ -12,7 +12,7 @@ from common import CLITieIn
 
 class VNCConfigurator(CLITieIn):
     def enable_vnc_and_set_password(self, password):
-        
+
         command = '/System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw \'{0}\' -restart -agent -privs -all'.format(
             password
         )

@@ -40,7 +40,7 @@ class UtilsTest(unittest.TestCase):
 
         try:
             remove(path)
-        except:
+        except BaseException:
             pass
 
         logger = get_logger('Test')
@@ -65,7 +65,10 @@ class UtilsTest(unittest.TestCase):
         assert_that(
             run_command('spicy porkchops'),
             equal_to(
-                RunCommandOutput(stdout='', stderr='/bin/sh: spicy: command not found', error_level=127)
+                RunCommandOutput(
+                    stdout='',
+                    stderr='/bin/sh: spicy: command not found',
+                    error_level=127)
             )
         )
 

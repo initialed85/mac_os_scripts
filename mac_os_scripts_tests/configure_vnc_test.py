@@ -26,10 +26,10 @@ class VNCConfiguratorTest(unittest.TestCase):
             self._subject.run_command.mock_calls,
             equal_to([
                 call(
-                    command_line="/System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw 'OtherPassword' -restart -agent -privs -all", 
+                    command_line="/System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -clientopts -setvnclegacy -vnclegacy yes -clientopts -setvncpw -vncpw 'OtherPassword' -restart -agent -privs -all",
                     quiet=True, send_lines=None, sudo_password_override=False, timeout=None
-                    )
-                ])
+                )
+            ])
         )
 
     def test_run_pass(self):

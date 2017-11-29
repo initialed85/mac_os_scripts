@@ -3,7 +3,7 @@ import unittest
 from hamcrest import assert_that, equal_to
 from mock import MagicMock, call
 
-from mac_os_scripts.map_user_drive import UserDriveMapper
+from mac_os_scripts.map_drive import DriveMapper
 from mac_os_scripts.utils import RunCommandOutput
 from mac_os_scripts_tests.test_common import _NO_OUTPUT
 
@@ -34,7 +34,7 @@ Request timeout for icmp_seq 2clear
 
 class UserDriveMapperTest(unittest.TestCase):
     def setUp(self):
-        self._subject = UserDriveMapper(
+        self._subject = DriveMapper(
             sudo_password='SomePassword',
         )
         self._subject.run_command = MagicMock()
@@ -50,7 +50,8 @@ class UserDriveMapperTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='/sbin/ping -c 4 -W 1000 -t 5 8.8.8.8', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
+                call(command_line='/sbin/ping -c 4 -W 1000 -t 5 8.8.8.8', quiet=True,
+                     sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
 
@@ -65,18 +66,18 @@ class UserDriveMapperTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='/sbin/ping -c 4 -W 1000 -t 5 6.6.6.6', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
+                call(command_line='/sbin/ping -c 4 -W 1000 -t 5 6.6.6.6', quiet=True,
+                     sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
 
-    def test_map_user_drive(self):
+    def test_map_drive(self):
         self._subject.run_command.return_value = _NO_OUTPUT
 
         assert_that(
-            self._subject.map_user_drive(
+            self._subject.map_drive(
                 hostname='file_server',
-                share='user_folders',
-                username='some.user',
+                share='user_folders/some.user',
             ),
             equal_to(True)
         )
@@ -92,14 +93,13 @@ class UserDriveMapperTest(unittest.TestCase):
     def test_run_pass(self):
         self._subject.ping_hostname = MagicMock()
         self._subject.ping_hostname.return_value = True
-        self._subject.map_user_drive = MagicMock()
-        self._subject.map_user_drive.return_value = True
+        self._subject.map_drive = MagicMock()
+        self._subject.map_drive.return_value = True
 
         assert_that(
             self._subject.run(
                 hostname='file_server',
-                share='user_folders',
-                username='some.user',
+                share='user_folders/some.user',
             ),
             equal_to(True)
         )

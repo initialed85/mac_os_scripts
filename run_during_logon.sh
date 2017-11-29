@@ -21,8 +21,11 @@ log 'setting some environment variables'
 # fully qualified domain name of the file server
 FQDN='grayfs01.grayman.com.au'
 
-# will be suffixed with \(current username)
-SHARE_PREFIX='homedrives$'
+# path to the user's share ($USER is the name of the currently logged on user)
+USER_SHARE_PATH="homedrives$/$USER"
+
+# path to the group drive
+GROUP_SHARE_PATH="groupdata"
 
 # need to run scripts from here because of Python path requirements
 run_and_log cd /usr/local/zetta/
@@ -31,6 +34,6 @@ run_and_log python -m mac_os_scripts.disable_handoff
 run_and_log python -m mac_os_scripts.disable_airdrop
 run_and_log python -m mac_os_scripts.enable_reduced_transparency
 run_and_log python -m mac_os_scripts.disable_metadata_file_creation
-run_and_log python -m mac_os_scripts.map_user_drive -f "$FQDN" -s "$SHARE_PREFIX"
+run_and_log python -m mac_os_scripts.map_drive -f "$FQDN" -s "$USER_SHARE_PATH"
 
 log '!!!! finished'

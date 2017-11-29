@@ -30,7 +30,7 @@ class AuditingFlagsConfigurator(CLITieIn):
                     output += line + '\n'
 
             self.write_file('/etc/security/audit_control', output)
-        except:
+        except BaseException:
             self._logger.error(traceback.format_exc())
             return False
 

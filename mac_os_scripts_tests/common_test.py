@@ -75,7 +75,8 @@ class CLITieInTest(unittest.TestCase):
         assert_that(
             run_command.mock_calls[0:1],
             equal_to([
-                call(command_line='echo \'SomePassword\' | sudo -S some command', quiet=True, timeout=None, send_lines=None)
+                call(command_line='echo \'SomePassword\' | sudo -S some command',
+                     quiet=True, timeout=None, send_lines=None)
             ])
         )
 
@@ -94,7 +95,8 @@ class CLITieInTest(unittest.TestCase):
         assert_that(
             run_command.mock_calls[0:1],
             equal_to([
-                call(command_line='echo \'OtherPassword\' | sudo -S some command', quiet=True, timeout=None, send_lines=None)
+                call(command_line='echo \'OtherPassword\' | sudo -S some command',
+                     quiet=True, timeout=None, send_lines=None)
             ])
         )
 
@@ -108,7 +110,11 @@ class CLITieInTest(unittest.TestCase):
 
         self._subject._sudo_password = 'SomePassword'
 
-        self._subject.run_command('some command', sudo_password_override=False, timeout=None, send_lines=None)
+        self._subject.run_command(
+            'some command',
+            sudo_password_override=False,
+            timeout=None,
+            send_lines=None)
 
         assert_that(
             run_command.mock_calls[0:1],

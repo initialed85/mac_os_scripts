@@ -1,20 +1,18 @@
 """
 
-This script is responsible for mapping the user's shared drive
+This script is responsible for mapping the a shared drive
 
 Commands used:
 
 - ping -c 4 -W 1000 -t 5 (file server)
-- open "smb://(file server)/(user share)/(user)"
+- open "smb://(file server)/(share path)"
 
 """
-
-import os
 
 from common import CLITieIn
 
 
-class UserDriveMapper(CLITieIn):
+class DriveMapper(CLITieIn):
     def ping_hostname(self, hostname):
         command = '/sbin/ping -c 4 -W 1000 -t 5 {0}'.format(
             hostname,
@@ -31,9 +29,9 @@ class UserDriveMapper(CLITieIn):
 
         return True
 
-    def map_user_drive(self, hostname, share, username):
-        command = '/usr/bin/open "smb://{0}/{1}/{2}"'.format(
-            hostname, share, username
+    def map_drive(self, hostname, share):
+        command = '/usr/bin/open "smb://{0}/{1}"'.format(
+            hostname, share
         )
         command_output = self.command(command)
 
@@ -47,17 +45,17 @@ class UserDriveMapper(CLITieIn):
 
         return True
 
-    def run(self, hostname, share, username):
+    def run(self, hostname, share):
         if not self.ping_hostname(hostname=hostname):
-            self._logger.error('failed to ping {0}; cannot continue mapping user drive'.format(hostname))
+            self._logger.error(
+                'failed to ping {0}; cannot continue mapping user drive'.format(hostname))
             return False
 
-        if not self.map_user_drive(
+        if not self.map_drive(
                 hostname=hostname,
                 share=share,
-                username=username,
         ):
-            self._logger.error('failed enable_security_logging; cannot continue')
+            self._logger.error('failed map_drive; cannot continue')
             return False
 
         self._logger.debug('passed')
@@ -87,19 +85,13 @@ if __name__ == '__main__':
 
     args = get_args(parser)
 
-    try:
-        username = os.environ['USER']
-    except:
-        raise Exception('unable to get USER environment variable; cannot continue')
-
-    actor = UserDriveMapper(
+    actor = DriveMapper(
         sudo_password=args.sudo_password,
     )
 
     result = actor.run(
         hostname=args.fqdn,
         share=args.share,
-        username=username,
     )
 
     if not result:

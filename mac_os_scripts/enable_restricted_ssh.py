@@ -56,7 +56,7 @@ class RestrictedSSHEnabler(CLITieIn):
             data = data.replace('\r', '')
 
             self.write_file('/etc/pf.conf', data)
-        except:
+        except BaseException:
             return False
 
         return True

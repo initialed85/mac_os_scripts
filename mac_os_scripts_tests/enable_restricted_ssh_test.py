@@ -141,9 +141,20 @@ class RestrictedSSHEnablerTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='/sbin/pfctl -d', quiet=True, sudo_password_override=False, timeout=None, send_lines=None),
-                call(command_line='/sbin/pfctl -F all', quiet=True, sudo_password_override=False, timeout=None, send_lines=None),
-                call(command_line='/sbin/pfctl -f /etc/pf.conf -e', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
+                call(
+                    command_line='/sbin/pfctl -d',
+                    quiet=True,
+                    sudo_password_override=False,
+                    timeout=None,
+                    send_lines=None),
+                call(
+                    command_line='/sbin/pfctl -F all',
+                    quiet=True,
+                    sudo_password_override=False,
+                    timeout=None,
+                    send_lines=None),
+                call(command_line='/sbin/pfctl -f /etc/pf.conf -e', quiet=True,
+                     sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
 
