@@ -7,6 +7,44 @@
 # have copied the inner mac_os_scripts folder to /usr/local/zetta as well as the
 # two bash scripts
 
+# logging stuff
+LOG_FILENAME=/tmp/mac_os_scripts_${USER}_run_during_logon.log
+STDOUT_LOG_FILENAME=/tmp/mac_os_scripts_${USER}_run_during_logon_stdout.log
+STDERR_LOG_FILENAME=/tmp/mac_os_scripts_${USER}_run_during_logon_stderr.log
+
+echo "" > $LOG_FILENAME
+echo "" > $STDOUT_LOG_FILENAME
+echo "" > $STDERR_LOG_FILENAME
+
+log() {
+    echo `date` $0 $@ >> $LOG_FILENAME
+}
+
+log_stdout() {
+    echo `date` $0 $@ >> $STDOUT_LOG_FILENAME
+}
+
+log_stderr() {
+    echo `date` $0 $@ >> $STDERR_LOG_FILENAME
+}
+
+run_and_log() {
+    log_stdout "calling $@"
+    log_stderr "calling $@"
+
+    log "calling $@"
+    "$@" 2>>$STDERR_LOG_FILENAME 1>>$STDOUT_LOG_FILENAME
+    RETURN_LEVEL=$?
+    log "return level $RETURN_LEVEL"
+
+    echo -ne "\n---- ---- ---- ----\n\n" >>$STDERR_LOG_FILENAME
+    echo -ne "\n---- ---- ---- ----\n\n" >>$STDOUT_LOG_FILENAME
+}
+
+log '!!!! started'
+
+log 'setting some environment variables'
+
 # fully qualified domain name of the file server
 FQDN='grayfs01.grayman.com.au'
 
@@ -14,22 +52,12 @@ FQDN='grayfs01.grayman.com.au'
 SHARE_PREFIX='homedrives$'
 
 # need to run scripts from here because of Python path requirements
-cd /usr/local/zetta/
+run_and_log cd /usr/local/zetta/
+run_and_log python -m mac_os_scripts.disable_handoff
+# python -m mac_os_scripts.change_background  # set in user template
+run_and_log python -m mac_os_scripts.disable_airdrop
+run_and_log python -m mac_os_scripts.enable_reduced_transparency
+run_and_log python -m mac_os_scripts.disable_metadata_file_creation
+run_and_log python -m mac_os_scripts.map_user_drive -f "$FQDN" -s "$SHARE_PREFIX"
 
-# disable handoff
-python -m mac_os_scripts.disable_handoff
-
-# change background image on all displays active desktops only (commented- not required)
-# python -m mac_os_scripts.change_background
-
-# disable airdrop
-python -m mac_os_scripts.disable_airdrop
-
-# enable reduced transparency
-python -m mac_os_scripts.enable_reduced_transparency
-
-# disable metadata file creation
-python -m mac_os_scripts.disable_metadata_file_creation
-
-# map user drive; note: -s flag is share prefix (not full share), it'll be suffixed with the username as a folder
-python -m mac_os_scripts.map_user_drive -f "$FQDN" -s "$SHARE_PREFIX"
+log '!!!! finished'

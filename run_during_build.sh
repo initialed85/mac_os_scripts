@@ -63,7 +63,8 @@ DOMAIN='grayman.com.au'
 DOMAIN_ADMIN_USERNAME="administrator@$DOMAIN"
 DOMAIN_ADMIN_PASSWORD='Password1'
 
-USER_LOGO_PATH='/Library/Caches/bankwest_userlogo.tif'
+# we believe this needs to be a tif and probably certain dimensions
+USER_LOGO_PATH='/Library/User Pictures/Bankwest/bankwest.tiff'
 
 # this is a comma-separated list of IPs or subnets with prefixes allowed to SSH into machines
 SSH_ALLOWED_HOSTS='10.0.1.11'
@@ -79,47 +80,26 @@ run_and_log chmod 777 *.app
 run_and_log chmod 777 *.sh
 run_and_log chmod 777 *.expect
 
+# need to run scripts from here because of Python path requirements
 run_and_log cd /usr/local/zetta/
-
 run_and_log mv -f "/System/Library/User Template/English.lproj" "/System/Library/User Template/English.lproj-backup"
-
 run_and_log tar -xzvf English.lproj.tar.gz
-
 run_and_log ditto -v English.lproj "/System/Library/User Template/English.lproj"
-
 run_and_log chmod 777 run_during_logon.sh
-
 run_and_log /usr/bin/python -m mac_os_scripts.configure_auditing_flags
-
 run_and_log /usr/bin/python -m mac_os_scripts.disable_ipv6
-
 run_and_log /usr/bin/python -m mac_os_scripts.enable_security_logging
-
-# skipping- handled with LaunchDaemon
-# run_and_log /usr/bin/python -m mac_os_scripts.enable_login_scripts -t PartialTrust
-
-# $SSH_ALLOWED_HOSTS required to be not empty but is ignored for now
-run_and_log /usr/bin/python -m mac_os_scripts.enable_restricted_ssh -a $SSH_ALLOWED_HOSTS 
-
-# skipping- handled in another script
-# run_and_log /usr/bin/python -m mac_os_scripts.configure_ntp -s $NTP_SERVER
-
+# run_and_log /usr/bin/python -m mac_os_scripts.enable_login_scripts -t PartialTrust  # handled with launchDaemon
+run_and_log /usr/bin/python -m mac_os_scripts.enable_restricted_ssh -a $SSH_ALLOWED_HOSTS  # need $SSH_ALLOWED_HOSTS, but not used
+# run_and_log /usr/bin/python -m mac_os_scripts.configure_ntp -s $NTP_SERVER  # handled before domain join
 run_and_log /usr/bin/python -m mac_os_scripts.set_user_account_logo -u $LOCAL_ADMIN_USERNAME -l $USER_LOGO_PATH
-
 run_and_log /usr/bin/python -m mac_os_scripts.configure_root_user -u $LOCAL_ADMIN_USERNAME -p $LOCAL_ADMIN_PASSWORD -r $ROOT_PASSWORD
-
 run_and_log /usr/bin/python -m mac_os_scripts.disable_core_dump
-
 run_and_log /usr/bin/python -m mac_os_scripts.enable_restricted_ibss
-
 run_and_log /usr/bin/python -m mac_os_scripts.add_computer_to_group -s "$SOURCE_OU_PATH" -d "$DESTINATION_OU_PATH" -u "$DOMAIN_ADMIN_USERNAME" -p "$DOMAIN_ADMIN_PASSWORD" -f "$DOMAIN"
-
 run_and_log /usr/bin/python -m mac_os_scripts.disable_guest_connection_to_shared_folders
-
 run_and_log /usr/bin/python -m mac_os_scripts.set_firmware_password -f $FIRMWARE_PASSWORD
-
 run_and_log /usr/bin/python -m mac_os_scripts.enable_discrete_graphics
-
 run_and_log /usr/bin/python -m mac_os_scripts.configure_vnc -v $VNC_PASSWORD
 
 log '!!!! finished'
