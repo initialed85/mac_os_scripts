@@ -19,15 +19,15 @@ echo "" > $STDOUT_LOG_FILENAME
 echo "" > $STDERR_LOG_FILENAME
 
 log() {
-    echo `date` $0 $@ >> $LOG_FILENAME
+    echo `/bin/date` $0 $@ >> $LOG_FILENAME
 }
 
 log_stdout() {
-    echo `date` $0 $@ >> $STDOUT_LOG_FILENAME
+    echo `/bin/date` $0 $@ >> $STDOUT_LOG_FILENAME
 }
 
 log_stderr() {
-    echo `date` $0 $@ >> $STDERR_LOG_FILENAME
+    echo `/bin/date` $0 $@ >> $STDERR_LOG_FILENAME
 }
 
 run_and_log() {
@@ -92,7 +92,7 @@ run_and_log /usr/bin/python -m mac_os_scripts.enable_security_logging
 # run_and_log /usr/bin/python -m mac_os_scripts.enable_login_scripts -t PartialTrust  # handled with launchDaemon
 run_and_log /usr/bin/python -m mac_os_scripts.enable_restricted_ssh -a $SSH_ALLOWED_HOSTS  # need $SSH_ALLOWED_HOSTS, but not used
 # run_and_log /usr/bin/python -m mac_os_scripts.configure_ntp -s $NTP_SERVER  # handled before domain join
-run_and_log /usr/bin/python -m mac_os_scripts.set_user_account_logo -u $LOCAL_ADMIN_USERNAME -l $USER_LOGO_PATH
+run_and_log /usr/bin/python -m mac_os_scripts.set_user_account_logo -u $LOCAL_ADMIN_USERNAME -l "$USER_LOGO_PATH"
 run_and_log /usr/bin/python -m mac_os_scripts.configure_root_user -u $LOCAL_ADMIN_USERNAME -p $LOCAL_ADMIN_PASSWORD -r $ROOT_PASSWORD
 run_and_log /usr/bin/python -m mac_os_scripts.disable_core_dump
 run_and_log /usr/bin/python -m mac_os_scripts.enable_restricted_ibss

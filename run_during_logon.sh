@@ -17,15 +17,15 @@ echo "" > $STDOUT_LOG_FILENAME
 echo "" > $STDERR_LOG_FILENAME
 
 log() {
-    echo `date` $0 $@ >> $LOG_FILENAME
+    echo `/bin/date` $0 $@ >> $LOG_FILENAME
 }
 
 log_stdout() {
-    echo `date` $0 $@ >> $STDOUT_LOG_FILENAME
+    echo `/bin/date` $0 $@ >> $STDOUT_LOG_FILENAME
 }
 
 log_stderr() {
-    echo `date` $0 $@ >> $STDERR_LOG_FILENAME
+    echo `/bin/date` $0 $@ >> $STDERR_LOG_FILENAME
 }
 
 run_and_log() {
