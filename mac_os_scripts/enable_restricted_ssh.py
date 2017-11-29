@@ -117,6 +117,11 @@ if __name__ == '__main__':
         sudo_password=args.sudo_password,
     )
 
-    actor.run(
+    result = actor.run(
         allowed_hosts=args.allowed_hosts,
     )
+
+    if result != 0:
+        exit(1)
+
+    exit(0)

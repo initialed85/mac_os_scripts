@@ -82,6 +82,11 @@ if __name__ == '__main__':
         sudo_password=args.sudo_password,
     )
 
-    actor.run(
+    result = actor.run(
         trust_level=args.trust_level,
     )
+
+    if result != 0:
+        exit(1)
+
+    exit(0)

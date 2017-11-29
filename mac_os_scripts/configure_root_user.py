@@ -99,8 +99,13 @@ if __name__ == '__main__':
         sudo_password=args.sudo_password,
     )
 
-    actor.run(
+    result = actor.run(
         admin_username=args.admin_username,
         admin_password=args.admin_password,
         root_password=args.root_password,
     )
+
+    if result != 0:
+        exit(1)
+
+    exit(0)

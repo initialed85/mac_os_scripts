@@ -9,15 +9,41 @@
 # interpreted by the shell, e.g. P@$$w0rd123!@# should be 'P@$$w0rd123!@#'- basically, it's
 # it's safest to pass all strings as single quotes unless you need to include variables in them
 
-# logging function
+# logging stuff
 LOG_FILENAME=/tmp/mac_os_scripts_run_during_build.log
+STDOUT_LOG_FILENAME=/tmp/mac_os_scripts_run_during_build_stdout.log
+STDERR_LOG_FILENAME=/tmp/mac_os_scripts_run_during_build_stderr.log
+
+echo "" > $LOG_FILENAME
+echo "" > $STDOUT_LOG_FILENAME
+echo "" > $STDERR_LOG_FILENAME
+
 log() {
     echo `date` $0 $@ >> $LOG_FILENAME
 }
 
-log '--------'
-log 'started'
-log '--------'
+log_stdout() {
+    echo `date` $0 $@ >> $STDOUT_LOG_FILENAME
+}
+
+log_stderr() {
+    echo `date` $0 $@ >> $STDERR_LOG_FILENAME
+}
+
+run_and_log() {
+    log_stdout "calling $@"
+    log_stderr "calling $@"
+
+    log "calling $@"
+    "$@" 2>>$STDERR_LOG_FILENAME 1>>$STDOUT_LOG_FILENAME
+    RETURN_LEVEL=$?
+    log "return level $RETURN_LEVEL"
+
+    echo -ne "\n---- ---- ---- ----\n\n" >>$STDERR_LOG_FILENAME
+    echo -ne "\n---- ---- ---- ----\n\n" >>$STDOUT_LOG_FILENAME
+}
+
+log '!!!! started'
 
 log 'setting some environment variables'
 
@@ -47,98 +73,53 @@ SSH_ALLOWED_HOSTS='10.0.1.11'
 
 cd /usr/local/zetta/mac_os_scripts/external/
 
-log 'extracting some stuff'
-tar -xzvf gfxCardStatus.app.tar.gz
-log "return level $?"
+run_and_log tar -xzvf gfxCardStatus.app.tar.gz
 
-log 'fixing some permissions'
-chmod 777 *.app
-log "return level $?"
-chmod 777 *.sh
-log "return level $?"
-chmod 777 *.expect
-log "return level $?"
+run_and_log chmod 777 *.app
+run_and_log chmod 777 *.sh
+run_and_log chmod 777 *.expect
 
-cd /usr/local/zetta/
+run_and_log cd /usr/local/zetta/
 
-log 'backing up old user template'
-mv -f "/System/Library/User Template/English.lproj" "/System/Library/User Template/English.lproj-backup"
-log "return level $?"
+run_and_log mv -f "/System/Library/User Template/English.lproj" "/System/Library/User Template/English.lproj-backup"
 
-log 'extracting new user template'
-tar -xzvf English.lproj.tar.gz
-log "return level $?"
+run_and_log tar -xzvf English.lproj.tar.gz
 
-log 'dittoing new user template into place'
-ditto -v English.lproj "/System/Library/User Template/English.lproj"
-log "return level $?"
+run_and_log ditto -v English.lproj "/System/Library/User Template/English.lproj"
 
-log 'fixing some more permissions'
-chmod 777 run_during_logon.sh
-log "return level $?"
+run_and_log chmod 777 run_during_logon.sh
 
-log 'python -m mac_os_scripts.configure_auditing_flags'
-python -m mac_os_scripts.configure_auditing_flags
-log "return level $?"
+run_and_log /usr/bin/python -m mac_os_scripts.configure_auditing_flags
 
-log 'python -m mac_os_scripts.disable_ipv6'
-python -m mac_os_scripts.disable_ipv6
-log "return level $?"
+run_and_log /usr/bin/python -m mac_os_scripts.disable_ipv6
 
-log 'python -m mac_os_scripts.enable_security_logging'
-python -m mac_os_scripts.enable_security_logging
-log "return level $?"
+run_and_log /usr/bin/python -m mac_os_scripts.enable_security_logging
 
 # skipping- handled with LaunchDaemon
-# log 'python -m mac_os_scripts.enable_login_scripts -t PartialTrust'
-# python -m mac_os_scripts.enable_login_scripts -t PartialTrust
-# log "return level $?"
+# run_and_log /usr/bin/python -m mac_os_scripts.enable_login_scripts -t PartialTrust
 
-log "python -m mac_os_scripts.enable_restricted_ssh -a $SSH_ALLOWED_HOSTS"
-python -m mac_os_scripts.enable_restricted_ssh -a $SSH_ALLOWED_HOSTS  # $SSH_ALLOWED_HOSTS required to be not empty but is ignored for now
-log "return level $?"
+# $SSH_ALLOWED_HOSTS required to be not empty but is ignored for now
+run_and_log /usr/bin/python -m mac_os_scripts.enable_restricted_ssh -a $SSH_ALLOWED_HOSTS 
 
 # skipping- handled in another script
-# log 'python -m mac_os_scripts.configure_ntp -s $NTP_SERVER'
-# python -m mac_os_scripts.configure_ntp -s $NTP_SERVER
-# log "return level $?"
+# run_and_log /usr/bin/python -m mac_os_scripts.configure_ntp -s $NTP_SERVER
 
-log "python -m mac_os_scripts.set_user_account_logo -u $LOCAL_ADMIN_USERNAME -l $USER_LOGO_PATH"
-python -m mac_os_scripts.set_user_account_logo -u $LOCAL_ADMIN_USERNAME -l $USER_LOGO_PATH
-log "return level $?"
+run_and_log /usr/bin/python -m mac_os_scripts.set_user_account_logo -u $LOCAL_ADMIN_USERNAME -l $USER_LOGO_PATH
 
-log "python -m mac_os_scripts.configure_root_user -u $LOCAL_ADMIN_USERNAME -p $LOCAL_ADMIN_PASSWORD -r $ROOT_PASSWORD"
-python -m mac_os_scripts.configure_root_user -u $LOCAL_ADMIN_USERNAME -p $LOCAL_ADMIN_PASSWORD -r $ROOT_PASSWORD
-log "return level $?"
+run_and_log /usr/bin/python -m mac_os_scripts.configure_root_user -u $LOCAL_ADMIN_USERNAME -p $LOCAL_ADMIN_PASSWORD -r $ROOT_PASSWORD
 
-log 'python -m mac_os_scripts.disable_core_dump'
-python -m mac_os_scripts.disable_core_dump
-log "return level $?"
+run_and_log /usr/bin/python -m mac_os_scripts.disable_core_dump
 
-log 'python -m mac_os_scripts.enable_restricted_ibss'
-python -m mac_os_scripts.enable_restricted_ibss
-log "return level $?"
+run_and_log /usr/bin/python -m mac_os_scripts.enable_restricted_ibss
 
-log "python -m mac_os_scripts.add_computer_to_group -s $SOURCE_OU_PATH -d $DESTINATION_OU_PATH -u $DOMAIN_ADMIN_USERNAME -p $DOMAIN_ADMIN_PASSWORD -f $DOMAIN"
-python -m mac_os_scripts.add_computer_to_group -s "$SOURCE_OU_PATH" -d "$DESTINATION_OU_PATH" -u "$DOMAIN_ADMIN_USERNAME" -p "$DOMAIN_ADMIN_PASSWORD" -f "$DOMAIN"
-log "return level $?"
+run_and_log /usr/bin/python -m mac_os_scripts.add_computer_to_group -s "$SOURCE_OU_PATH" -d "$DESTINATION_OU_PATH" -u "$DOMAIN_ADMIN_USERNAME" -p "$DOMAIN_ADMIN_PASSWORD" -f "$DOMAIN"
 
-log 'python -m mac_os_scripts.disable_guest_connection_to_shared_folders'
-python -m mac_os_scripts.disable_guest_connection_to_shared_folders
-log "return level $?"
+run_and_log /usr/bin/python -m mac_os_scripts.disable_guest_connection_to_shared_folders
 
-log "python -m mac_os_scripts.set_firmware_password -f $FIRMWARE_PASSWORD"
-python -m mac_os_scripts.set_firmware_password -f $FIRMWARE_PASSWORD
-log "return level $?"
+run_and_log /usr/bin/python -m mac_os_scripts.set_firmware_password -f $FIRMWARE_PASSWORD
 
-log 'python -m mac_os_scripts.enable_discrete_graphics'
-python -m mac_os_scripts.enable_discrete_graphics
-log "return level $?"
+run_and_log /usr/bin/python -m mac_os_scripts.enable_discrete_graphics
 
-log "python -m mac_os_scripts.configure_vnc -v $VNC_PASSWORD"
-python -m mac_os_scripts.configure_vnc -v $VNC_PASSWORD
-log "return level $?"
+run_and_log /usr/bin/python -m mac_os_scripts.configure_vnc -v $VNC_PASSWORD
 
-log '--------'
-log 'finished'
-log '--------'
+log '!!!! finished'

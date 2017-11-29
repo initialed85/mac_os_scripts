@@ -132,10 +132,15 @@ if __name__ == '__main__':
         sudo_password=args.sudo_password,
     )
 
-    actor.run(
+    result = actor.run(
         source_ou_path=args.source_ou_path,
         destination_ou_path=args.destination_ou_path,
         fqdn=args.fqdn,
         domain_username=args.domain_username,
         domain_password=args.domain_password,
     )
+
+    if result != 0:
+        exit(1)
+
+    exit(0)
