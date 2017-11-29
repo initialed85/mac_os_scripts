@@ -32,9 +32,29 @@ class DiscreteGraphicsEnablerTest(unittest.TestCase):
             ])
         )
 
+    def test_remove_gfxcardstatus_login_item(self):
+        self._subject.run_command.return_value = RunCommandOutput(
+            stdout='', stderr='', error_level=-9
+        )
+
+        assert_that(
+            self._subject.remove_gfxcardstatus_login_item(),
+            equal_to(True)
+        )
+
+        assert_that(
+            self._subject.run_command.mock_calls,
+            equal_to([
+                call(command_line='osascript -e \'tell application "System Events" to delete login item "gfxCardStatus"\'',
+                     quiet=True, send_lines=None, sudo_password_override=False, timeout=None)
+            ])
+        )
+
     def test_run_pass(self):
         self._subject.enable_discrete_graphics = MagicMock()
         self._subject.enable_discrete_graphics.return_value = True
+        self._subject.remove_gfxcardstatus_login_item = MagicMock()
+        self._subject.remove_gfxcardstatus_login_item.return_value = True
 
         assert_that(
             self._subject.run(),
