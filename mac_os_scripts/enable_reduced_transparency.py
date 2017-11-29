@@ -13,7 +13,7 @@ from common import CLITieIn
 
 class ReducedTransparencyEnabler(CLITieIn):
     def enable_reduced_transparency(self):
-        command = 'defaults write com.apple.universalaccess reduceTransparency -bool true'
+        command = '/usr/bin/defaults write com.apple.universalaccess reduceTransparency -bool true'
         command_output = self.command(command)
 
         if command_output.error_level != 0:
@@ -27,7 +27,7 @@ class ReducedTransparencyEnabler(CLITieIn):
         return True
 
     def restart_dock(self):
-        command = 'pkill -9 -f Dock.app'
+        command = '/usr/bin/pkill -9 -f Dock.app'
         command_output = self.command(command)
 
         if command_output.error_level != 0:

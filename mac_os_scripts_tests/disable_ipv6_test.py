@@ -68,7 +68,7 @@ class IPv6DisableTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='networksetup -listallnetworkservices', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
+                call(command_line='/usr/sbin/networksetup -listallnetworkservices', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
 
@@ -83,7 +83,7 @@ class IPv6DisableTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='networksetup -setv6off "Thunderbolt Ethernet"', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
+                call(command_line='/usr/sbin/networksetup -setv6off "Thunderbolt Ethernet"', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
 
@@ -98,7 +98,7 @@ class IPv6DisableTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='networksetup -getinfo "Thunderbolt Ethernet"', quiet=True,
+                call(command_line='/usr/sbin/networksetup -getinfo "Thunderbolt Ethernet"', quiet=True,
                      sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )

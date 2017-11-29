@@ -38,7 +38,7 @@ from common import CLITieIn
 
 class BackgroundSetter(CLITieIn):
     def change_background(self, background_path):
-        command = 'osascript /usr/local/zetta/mac_os_scripts/external/change_background.scpt {0}'.format(
+        command = '/usr/bin/osascript /usr/local/zetta/mac_os_scripts/external/change_background.scpt {0}'.format(
             background_path
         )
         command_output = self.command(command)

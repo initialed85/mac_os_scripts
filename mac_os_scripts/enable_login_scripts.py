@@ -14,7 +14,7 @@ from common import CLITieIn
 
 class LoginScriptEnabler(CLITieIn):
     def enable_mcx_login_scripts(self):
-        command = 'defaults write /var/root/Library/Preferences/com.apple.loginwindow EnableMCXLoginScripts TRUE'
+        command = '/usr/bin/defaults write /var/root/Library/Preferences/com.apple.loginwindow EnableMCXLoginScripts TRUE'
         command_output = self.command(command)
 
         if command_output.error_level != 0:
@@ -33,7 +33,7 @@ class LoginScriptEnabler(CLITieIn):
         :param value: string FullTrust, PartialTrust or Anonymous
         :return:
         """
-        command = 'defaults write var/root/Library/Preferences/com.apple.loginwindow MCXScriptTrust -string \'{0}\''.format(
+        command = '/usr/bin/defaults write var/root/Library/Preferences/com.apple.loginwindow MCXScriptTrust -string \'{0}\''.format(
             trust_level
         )
         command_output = self.command(command)

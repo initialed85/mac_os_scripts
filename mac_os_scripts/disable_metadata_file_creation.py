@@ -14,7 +14,7 @@ from common import CLITieIn
 
 class MetadataFileCreationDisabler(CLITieIn):
     def set_ds_dont_write_network_stores(self):
-        command = 'defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true'
+        command = '/usr/bin/defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true'
         command_output = self.command(command)
 
         if command_output.error_level != 0:
@@ -28,7 +28,7 @@ class MetadataFileCreationDisabler(CLITieIn):
         return True
 
     def get_ds_dont_write_network_stores(self):
-        command = 'defaults read com.apple.desktopservices DSDontWriteNetworkStores'
+        command = '/usr/bin/defaults read com.apple.desktopservices DSDontWriteNetworkStores'
         command_output = self.command(command)
 
         if command_output.error_level != 0:

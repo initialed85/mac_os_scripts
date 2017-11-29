@@ -25,7 +25,7 @@ class NTPConfiguratorTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='systemsetup -setusingnetworktime on', quiet=True, sudo_password_override=False, timeout=None,
+                call(command_line='/usr/sbin/systemsetup -setusingnetworktime on', quiet=True, sudo_password_override=False, timeout=None,
                      send_lines=None)
             ])
         )
@@ -43,7 +43,7 @@ class NTPConfiguratorTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='systemsetup -setnetworktimeserver time1.google.com', quiet=True,
+                call(command_line='/usr/sbin/systemsetup -setnetworktimeserver time1.google.com', quiet=True,
                      sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )

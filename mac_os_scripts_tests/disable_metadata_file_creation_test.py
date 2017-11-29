@@ -37,7 +37,7 @@ class MetadataFileCreationDisablerTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true',
+                call(command_line='/usr/bin/defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true',
                      quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
@@ -53,7 +53,7 @@ class MetadataFileCreationDisablerTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='defaults read com.apple.desktopservices DSDontWriteNetworkStores', quiet=True,
+                call(command_line='/usr/bin/defaults read com.apple.desktopservices DSDontWriteNetworkStores', quiet=True,
                      sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )

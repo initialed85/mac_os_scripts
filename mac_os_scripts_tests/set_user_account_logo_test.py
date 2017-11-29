@@ -27,7 +27,7 @@ class LocalUserAccountLogoSetterTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='dscl . delete /Users/SomeUser JPEGPhoto', quiet=True, sudo_password_override=False, timeout=None,
+                call(command_line='/usr/bin/dscl . delete /Users/SomeUser JPEGPhoto', quiet=True, sudo_password_override=False, timeout=None,
                      send_lines=None)
             ])
         )
@@ -45,7 +45,7 @@ class LocalUserAccountLogoSetterTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='dscl . delete /Users/SomeUser Picture', quiet=True, sudo_password_override=False, timeout=None,
+                call(command_line='/usr/bin/dscl . delete /Users/SomeUser Picture', quiet=True, sudo_password_override=False, timeout=None,
                      send_lines=None)
             ])
         )
@@ -64,7 +64,7 @@ class LocalUserAccountLogoSetterTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='dscl . create /Users/SomeUser Picture "/path/to/some/logo.tif"', quiet=True,
+                call(command_line='/usr/bin/dscl . create /Users/SomeUser Picture "/path/to/some/logo.tif"', quiet=True,
                      sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )

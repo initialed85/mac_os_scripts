@@ -58,7 +58,7 @@ class ComputerToGroupAdderTest(unittest.TestCase):
             self._subject.run_command.mock_calls,
             equal_to([
                 call(
-                    command_line='ldapmodify -H ldap://some.domain.com -f /tmp/register.ldif -D some.admin -w P\\@\\$\\$w0rd123\\!\\@\\# -x -c -v',
+                    command_line='/usr/bin/ldapmodify -H ldap://some.domain.com -f /tmp/register.ldif -D some.admin -w P\\@\\$\\$w0rd123\\!\\@\\# -x -c -v',
                     quiet=True, sudo_password_override=False, timeout=None, send_lines=None
                 )
             ])

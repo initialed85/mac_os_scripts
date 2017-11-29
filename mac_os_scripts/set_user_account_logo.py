@@ -15,7 +15,7 @@ from common import CLITieIn
 
 class LocalUserAccountLogoSetter(CLITieIn):
     def delete_user_account_logo_jpeg(self, username):
-        command = 'dscl . delete /Users/{0} JPEGPhoto'.format(
+        command = '/usr/bin/dscl . delete /Users/{0} JPEGPhoto'.format(
             username
         )
         command_output = self.command(command)
@@ -31,7 +31,7 @@ class LocalUserAccountLogoSetter(CLITieIn):
         return True
 
     def delete_user_account_logo(self, username):
-        command = 'dscl . delete /Users/{0} Picture'.format(
+        command = '/usr/bin/dscl . delete /Users/{0} Picture'.format(
             username
         )
         command_output = self.command(command)
@@ -47,7 +47,7 @@ class LocalUserAccountLogoSetter(CLITieIn):
         return True
 
     def create_user_account_logo(self, username, logo_path):
-        command = 'dscl . create /Users/{0} Picture "{1}"'.format(
+        command = '/usr/bin/dscl . create /Users/{0} Picture "{1}"'.format(
             username, logo_path
         )
         command_output = self.command(command)

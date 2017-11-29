@@ -42,7 +42,7 @@ class ComputerToGroupAdder(CLITieIn):
         return True
 
     def add_computer_to_group(self, fqdn, domain_username, domain_password):
-        command = 'ldapmodify -H ldap://{0} -f /tmp/register.ldif -D {1} -w {2} -x -c -v'.format(
+        command = '/usr/bin/ldapmodify -H ldap://{0} -f /tmp/register.ldif -D {1} -w {2} -x -c -v'.format(
             fqdn, domain_username, domain_password
         )
         command_output = self.command(command)

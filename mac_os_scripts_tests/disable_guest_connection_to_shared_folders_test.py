@@ -25,7 +25,7 @@ class GuestConnectionToSharedFoldersDisablerTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess false',
+                call(command_line='/usr/bin/defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess false',
                      quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )

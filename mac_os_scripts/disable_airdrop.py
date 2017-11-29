@@ -14,7 +14,7 @@ from common import CLITieIn
 
 class AirDropDisabler(CLITieIn):
     def disable_airdrop(self):
-        command = 'defaults write com.apple.NetworkBrowser DisableAirDrop -bool YES'
+        command = '/usr/bin/defaults write com.apple.NetworkBrowser DisableAirDrop -bool YES'
         command_output = self.command(command)
 
         if command_output.error_level != 0:
@@ -28,7 +28,7 @@ class AirDropDisabler(CLITieIn):
         return True
 
     def restart_finder(self):
-        command = 'pkill -9 -f Finder.app'
+        command = '/usr/bin/pkill -9 -f Finder.app'
         command_output = self.command(command)
 
         if command_output.error_level != 0:

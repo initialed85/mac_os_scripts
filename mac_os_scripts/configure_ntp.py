@@ -14,7 +14,7 @@ from common import CLITieIn
 
 class NTPConfigurator(CLITieIn):
     def enable_ntp(self):
-        command = 'systemsetup -setusingnetworktime on'
+        command = '/usr/sbin/systemsetup -setusingnetworktime on'
         command_output = self.command(command)
 
         if command_output.error_level != 0:
@@ -28,7 +28,7 @@ class NTPConfigurator(CLITieIn):
         return True
 
     def set_ntp_server(self, server):
-        command = 'systemsetup -setnetworktimeserver {0}'.format(server)
+        command = '/usr/sbin/systemsetup -setnetworktimeserver {0}'.format(server)
         command_output = self.command(command)
 
         if command_output.error_level != 0:

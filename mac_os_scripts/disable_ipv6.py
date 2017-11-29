@@ -15,7 +15,7 @@ from common import CLITieIn
 
 class IPv6Disabler(CLITieIn):
     def list_all_network_services(self):
-        command = 'networksetup -listallnetworkservices'
+        command = '/usr/sbin/networksetup -listallnetworkservices'
         command_output = self.command(command)
 
         if command_output.error_level != 0:
@@ -31,7 +31,7 @@ class IPv6Disabler(CLITieIn):
         ])
 
     def set_v6_off(self, name):
-        command = 'networksetup -setv6off "{0}"'.format(name)
+        command = '/usr/sbin/networksetup -setv6off "{0}"'.format(name)
         command_output = self.command(command)
 
         if command_output.error_level != 0:
@@ -45,7 +45,7 @@ class IPv6Disabler(CLITieIn):
         return True
 
     def get_info(self, name):
-        command = 'networksetup -getinfo "{0}"'.format(name)
+        command = '/usr/sbin/networksetup -getinfo "{0}"'.format(name)
         command_output = self.command(command)
 
         if command_output.error_level != 0:

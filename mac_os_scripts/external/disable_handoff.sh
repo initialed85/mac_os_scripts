@@ -6,11 +6,11 @@ UUID=$(/usr/sbin/system_profiler SPHardwareDataType | grep "Hardware UUID" | cut
 echo "got uuid $UUID"
 
 echo "adjusting settings in useractivityd with uuid"
-defaults write ~/Library/Preferences/ByHost/com.apple.coreservices.useractivityd.$UUID.plist ActivityReceivingAllowed -bool false
-defaults write ~/Library/Preferences/ByHost/com.apple.coreservices.useractivityd.$UUID.plist ActivityAdvertisingAllowed -bool false
+/usr/bin/defaults write ~/Library/Preferences/ByHost/com.apple.coreservices.useractivityd.$UUID.plist ActivityReceivingAllowed -bool false
+/usr/bin/defaults write ~/Library/Preferences/ByHost/com.apple.coreservices.useractivityd.$UUID.plist ActivityAdvertisingAllowed -bool false
 
 echo "adjusting settings in useractivityd without uuid"
-defaults write ~/Library/Preferences/ByHost/com.apple.coreservices.useractivityd ActivityAdvertisingAllowed -bool false
-defaults write ~/Library/Preferences/ByHost/com.apple.coreservices.useractivityd ActivityReceivingAllowed -bool false
+/usr/bin/defaults write ~/Library/Preferences/ByHost/com.apple.coreservices.useractivityd ActivityAdvertisingAllowed -bool false
+/usr/bin/defaults write ~/Library/Preferences/ByHost/com.apple.coreservices.useractivityd ActivityReceivingAllowed -bool false
 
 exit 0

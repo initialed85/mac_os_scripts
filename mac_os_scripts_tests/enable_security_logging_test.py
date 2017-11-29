@@ -31,7 +31,7 @@ class SecurityLoggingEnablerTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist', quiet=True,
+                call(command_line='/bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist', quiet=True,
                      sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )

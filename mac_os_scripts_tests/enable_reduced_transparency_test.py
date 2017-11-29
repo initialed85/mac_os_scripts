@@ -25,7 +25,7 @@ class ReducedTransparencyEnablerTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='defaults write com.apple.universalaccess reduceTransparency -bool true', quiet=True,
+                call(command_line='/usr/bin/defaults write com.apple.universalaccess reduceTransparency -bool true', quiet=True,
                      sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
@@ -41,7 +41,7 @@ class ReducedTransparencyEnablerTest(unittest.TestCase):
         assert_that(
             self._subject.run_command.mock_calls,
             equal_to([
-                call(command_line='pkill -9 -f Dock.app', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
+                call(command_line='/usr/bin/pkill -9 -f Dock.app', quiet=True, sudo_password_override=False, timeout=None, send_lines=None)
             ])
         )
 

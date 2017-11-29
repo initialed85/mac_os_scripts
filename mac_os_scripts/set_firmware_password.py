@@ -28,7 +28,7 @@ from common import CLITieIn
 
 class FirmwarePasswordSetter(CLITieIn):
     def set_firmware_password(self, password):
-        command = 'expect -d -f /usr/local/zetta/mac_os_scripts/external/set_firmware_password.expect \'{0}\''.format(password)
+        command = '/usr/bin/expect -d -f /usr/local/zetta/mac_os_scripts/external/set_firmware_password.expect \'{0}\''.format(password)
         command_output = self.command(command)
 
         if command_output.error_level != 0:

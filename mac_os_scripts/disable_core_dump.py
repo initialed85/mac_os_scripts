@@ -13,7 +13,7 @@ from common import CLITieIn
 
 class CoreDumpDisabler(CLITieIn):
     def disable_core_dump(self):
-        command = 'sysctl kern.coredump=0'
+        command = '/usr/sbin/sysctl kern.coredump=0'
         command_output = self.command(command)
 
         if command_output.error_level != 0:

@@ -16,7 +16,7 @@ from common import CLITieIn
 
 class UserDriveMapper(CLITieIn):
     def ping_hostname(self, hostname):
-        command = 'ping -c 4 -W 1000 -t 5 {0}'.format(
+        command = '/sbin/ping -c 4 -W 1000 -t 5 {0}'.format(
             hostname,
         )
         command_output = self.command(command)
@@ -32,7 +32,7 @@ class UserDriveMapper(CLITieIn):
         return True
 
     def map_user_drive(self, hostname, share, username):
-        command = 'open "smb://{0}/{1}/{2}"'.format(
+        command = '/usr/bin/open "smb://{0}/{1}/{2}"'.format(
             hostname, share, username
         )
         command_output = self.command(command)

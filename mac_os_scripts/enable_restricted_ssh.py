@@ -19,7 +19,7 @@ from common import CLITieIn
 
 class RestrictedSSHEnabler(CLITieIn):
     def set_remote_login_on(self):
-        command = 'systemsetup -setremotelogin on'
+        command = '/usr/sbin/systemsetup -setremotelogin on'
         command_output = self.command(command)
 
         if command_output.error_level != 0:
@@ -63,9 +63,9 @@ class RestrictedSSHEnabler(CLITieIn):
 
     def restart_firewall(self):
         commands = [
-            'pfctl -d',
-            'pfctl -F all',
-            'pfctl -f /etc/pf.conf -e',
+            '/sbin/pfctl -d',
+            '/sbin/pfctl -F all',
+            '/sbin/pfctl -f /etc/pf.conf -e',
         ]
         failed = False
         for command in commands:

@@ -13,7 +13,7 @@ from common import CLITieIn
 
 class GuestConnectionToSharedFoldersDisabler(CLITieIn):
     def disable_guest_connection_to_shared_folders(self):
-        command = 'defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess false'
+        command = '/usr/bin/defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess false'
         command_output = self.command(command)
 
         if command_output.error_level != 0:
